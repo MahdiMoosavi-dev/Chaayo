@@ -7,7 +7,7 @@
 | **Supersedes** | Extends [cafeteria_inventory_system_design.docx](../cafeteria_inventory_system_design.docx) (v0.1) |
 | **Stack** | ASP.NET Core Web API with controllers (.NET 10, C#) · EF Core · PostgreSQL. See [ADR-016](09-decisions.md#adr-016). |
 
-**Client proposal (phases, timeline, cost):** [Chaayo-Proposal.pdf](Chaayo-Proposal.pdf)
+**Client proposal (phases, timeline, cost):** [Chaayo-Proposal.pdf](Chaayo-Proposal.pdf) (English) · [Chaayo-Proposal.fa.pdf](Chaayo-Proposal.fa.pdf) (فارسی) · [Chaayo-Proposal.fa.html](Chaayo-Proposal.fa.html) (Persian web page with effects; download and open in a browser)
 
 ## How to review (about 45 minutes)
 

@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<meta charset="utf-8">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>پروپوزال چایو</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a lapis title band with a gold tile border, then one ruled reading column, like a framed manuscript page. */
+:root{
+  --paper:#edf0ee; --card:#f9faf7; --ink:#18223a; --muted:#566079;
+  --lapis:#1f3f77; --gold:#96721f; --turq:#136f6c; --line:#c7cdd2;
+  --tint:#e1e7ee; --hero-bg:#1b3766; --hero-fg:#f4efe0; --hero-gold:#d9b96a;
+  --display:"Noto Naskh Arabic","Vazirmatn",Tahoma,serif;
+  --body:"Vazirmatn",Tahoma,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f1626; --card:#172036; --ink:#e8eaf0; --muted:#a3acbf;
+    --lapis:#9dbaf0; --gold:#d7b467; --turq:#5cc9c1; --line:#2d3956;
+    --tint:#1d2a45; --hero-bg:#13234a; --hero-fg:#f4efe0; --hero-gold:#d9b96a;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0f1626; --card:#172036; --ink:#e8eaf0; --muted:#a3acbf;
+  --lapis:#9dbaf0; --gold:#d7b467; --turq:#5cc9c1; --line:#2d3956;
+  --tint:#1d2a45; --hero-bg:#13234a; --hero-fg:#f4efe0; --hero-gold:#d9b96a;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:2;}
+.page{direction:rtl;text-align:right}
+.wrap{max-width:880px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--lapis)}
+a:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.5;margin:0}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+.en{font-family:var(--body);direction:ltr;unicode-bidi:isolate}
+
+/* progress + nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--hero-bg)}
+.progress{position:fixed;inset:env(safe-area-inset-top,0px) 0 auto 0;height:3px;z-index:30;background:transparent}
+.progress i{display:block;height:100%;width:0;background:var(--hero-gold);margin-inline-start:0}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:8px;scrollbar-width:none}
+.nav a{flex:none;text-decoration:none;color:var(--muted);font-size:13.5px;padding:2px 12px;border-radius:999px;border:1px solid transparent;transition:color .2s,border-color .2s,background .2s}
+.nav a:hover{color:var(--ink)}
+.nav a.on{color:var(--lapis);border-color:var(--gold);background:var(--tint)}
+
+/* hero */
+.hero{background:var(--hero-bg);color:var(--hero-fg);position:relative;overflow:hidden}
+.tiles{height:26px;background-repeat:repeat-x;background-size:52px 26px;background-position:center;opacity:.9;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='26' viewBox='0 0 52 26'%3E%3Cg fill='none' stroke='%23d9b96a' stroke-width='1'%3E%3Crect x='6' y='5' width='16' height='16'/%3E%3Crect x='6' y='5' width='16' height='16' transform='rotate(45 14 13)'/%3E%3Ccircle cx='40' cy='13' r='2.2'/%3E%3Cpath d='M26 13h8M46 13h6M0 13h2'/%3E%3C/g%3E%3C/svg%3E")}
+.hero .wrap{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding-block:44px 40px}
+.hero .kicker{color:var(--hero-gold);font-size:14px;letter-spacing:.02em}
+.hero h1{font-size:clamp(30px,6vw,50px);font-weight:700;margin-block:6px 10px}
+.hero .lead{max-width:38em;color:var(--hero-fg);opacity:.92}
+.hero .meta{margin-top:14px;font-size:13.5px;color:var(--hero-gold)}
+.facts{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.fact{border:1px solid var(--hero-gold);border-radius:4px;padding:8px 18px;min-width:132px;position:relative}
+.fact::after{content:"";position:absolute;inset:3px;border:1px solid var(--hero-gold);opacity:.35;border-radius:2px;pointer-events:none}
+.fact b{display:block;font-family:var(--display);font-size:26px;line-height:1.5;color:var(--hero-fg)}
+.fact span{font-size:13px;color:var(--hero-gold)}
+.glass{width:120px;flex:none}
+.glass .steam path{stroke:var(--hero-gold);fill:none;stroke-width:2;stroke-linecap:round;opacity:.75;animation:steam 4.5s ease-in-out infinite}
+.glass .steam path:nth-child(2){animation-delay:1.2s}
+.glass .steam path:nth-child(3){animation-delay:2.3s}
+@keyframes steam{0%{transform:translateY(8px);opacity:0}35%{opacity:.8}100%{transform:translateY(-12px);opacity:0}}
+.hero-load>*{animation:rise .7s ease both}
+.hero-load>*:nth-child(2){animation-delay:.08s}.hero-load>*:nth-child(3){animation-delay:.16s}
+.hero-load>*:nth-child(4){animation-delay:.24s}.hero-load>*:nth-child(5){animation-delay:.32s}
+@keyframes rise{from{transform:translateY(14px);opacity:.2}to{transform:none;opacity:1}}
+
+/* sections */
+main{display:flex;flex-direction:column;gap:56px;padding-block:48px 64px}
+section{scroll-margin-top:64px;display:flex;flex-direction:column;gap:18px}
+.sec-head{display:flex;align-items:center;gap:12px}
+.star{width:14px;height:14px;flex:none;position:relative}
+.star::before,.star::after{content:"";position:absolute;inset:0;border:1.5px solid var(--gold)}
+.star::after{transform:rotate(45deg)}
+h2{font-size:28px;font-weight:700;color:var(--lapis)}
+.sec-head::after{content:"";flex:1;height:1px;background:linear-gradient(to left,var(--gold),transparent)}
+h3{font-size:20px;font-weight:600}
+.lede{font-size:17px}
+.muted{color:var(--muted)}
+ul.plain{margin:0;padding-inline-start:1.3em;display:flex;flex-direction:column;gap:6px}
+ul.plain li::marker{color:var(--gold)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px 18px;transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.card h3{font-size:18px;color:var(--turq);margin-bottom:4px}
+.card p{font-size:15px;line-height:1.9}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.8}
+th,td{padding:10px 14px;text-align:right;vertical-align:top;border-bottom:1px solid var(--line)}
+thead th{background:var(--tint);color:var(--lapis);font-weight:600;white-space:nowrap;border-bottom:2px solid var(--gold)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:var(--tint)}
+tr.total td{font-weight:700;border-top:2px solid var(--gold)}
+td.n,th.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.say{color:var(--lapis);font-weight:500}
+
+/* architecture */
+.arch{display:flex;flex-direction:column;gap:6px}
+.arch .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 14px;min-width:0}
+.box b{display:block;font-size:15.5px}
+.box span{display:block;font-size:13px;color:var(--muted);line-height:1.8}
+.box b span,.box span span{display:inline;font-size:inherit;color:inherit}
+.box.key{border:2px solid var(--gold);background:var(--tint)}
+.arrows{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;color:var(--gold);font-size:18px;line-height:1}
+.box.wide{text-align:center}
+
+/* roadmap */
+.road{display:flex;gap:8px;align-items:stretch}
+.ph{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;position:relative;transform-origin:right center}
+.ph.p1{flex:14;border:2px solid var(--gold);background:var(--tint)}.ph.p2{flex:10}.ph.p3{flex:12}
+.ph b{display:block;font-family:var(--display);font-size:18px}
+.ph>span{display:block;font-size:13px;color:var(--muted);line-height:1.8}
+.ph em{font-style:normal;display:inline-block;margin-top:6px;font-size:13px;color:var(--turq);font-weight:600}
+.gates{display:flex;gap:8px;font-size:13px;color:var(--muted)}
+.gates div{min-width:0;text-align:left;padding-inline-end:2px}
+.gates .g1{flex:14}.gates .g2{flex:10}.gates .g3{flex:12}
+.gates div::after{content:"◆";color:var(--gold);margin-inline-start:6px}
+.js .road .ph{animation:grow .9s cubic-bezier(.2,.7,.2,1) both;animation-play-state:paused}
+.js .road.in .ph{animation-play-state:running}
+.js .road .p2{animation-delay:.25s}.js .road .p3{animation-delay:.5s}
+@keyframes grow{from{transform:scaleX(.55);opacity:.3}to{transform:none;opacity:1}}
+
+/* phases */
+.phase{background:var(--card);border:1px solid var(--line);border-inline-start:4px solid var(--gold);border-radius:6px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.phase header{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px}
+.phase h3{color:var(--lapis)}
+.pill{font-size:13px;border:1px solid var(--gold);border-radius:999px;padding:0 12px;color:var(--ink);white-space:nowrap}
+.gate{font-size:14.5px;background:var(--tint);border-radius:4px;padding:6px 12px}
+
+/* cost bars */
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;font-size:14.5px}
+.track{background:var(--tint);border-radius:4px;height:30px;position:relative;overflow:hidden}
+.fill{height:100%;background:var(--lapis);border-radius:4px;width:var(--w);transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+.js .bars:not(.in) .fill{width:0}
+.track span{position:absolute;inset-inline-start:10px;top:0;line-height:30px;font-size:13.5px;font-weight:600;color:var(--card);font-variant-numeric:tabular-nums}
+
+/* faq + checklist */
+details{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:0 16px}
+details+details{margin-top:-8px}
+summary{cursor:pointer;padding:12px 0;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--gold);font-size:20px;line-height:1.6;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding-bottom:14px;color:var(--muted)}
+.checks{display:flex;flex-direction:column;gap:8px}
+.checks label{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 14px;cursor:pointer;transition:border-color .2s}
+.checks label:hover{border-color:var(--gold)}
+.checks input{width:18px;height:18px;margin-top:8px;accent-color:var(--turq);flex:none}
+.checks input:checked+span{color:var(--muted);text-decoration:line-through}
+.done-note{font-size:14px;color:var(--turq);font-weight:600}
+
+.pdfs{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1px solid var(--gold);border-radius:4px;padding:6px 18px;color:var(--ink);background:var(--card);font-weight:600;font-size:15px;transition:background .2s,transform .2s}
+.btn:hover{background:var(--tint);transform:translateY(-2px)}
+footer{border-top:1px solid var(--line);background:var(--card)}
+footer .wrap{padding-block:22px;font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+
+.js .reveal{opacity:.3;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (max-width:640px){
+  .hero .wrap{grid-template-columns:1fr}.glass{display:none}
+  .arch .row{grid-template-columns:1fr}.arrows{grid-template-columns:1fr}.arrows span:nth-child(n+2){display:none}
+  .road{flex-direction:column}.gates{display:none}
+  .bar{grid-template-columns:1fr}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  .nav,.progress{display:none}
+  .js .reveal{opacity:1!important;transform:none!important}
+  .js .bars:not(.in) .fill{width:var(--w)!important}
+  .js .road .ph{animation:none!important}
+  .hero-load>*{animation:none!important}
+  .hero,.fill,thead th,.box.key,.ph.p1{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card,tr,.box,.ph,.bar,details,.checks label,.gate{break-inside:avoid}
+  .sec-head,h3,.phase header{break-after:avoid}
+  body{background:var(--card)}
+  main{gap:30px;padding-block:28px 24px}
+  @page{size:A4;margin:12mm 0}
+  @page:first{margin-top:0}
+}
+</style>
+</head>
+<body>
+<div class="page" lang="fa" dir="rtl">
+<div class="progress" aria-hidden="true"><i id="bar"></i></div>
+
+<header class="hero">
+  <div class="tiles" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-load">
+      <p class="kicker">پروپوزال طراحی و ساخت سامانه</p>
+      <h1>چایو؛ انبار، قیمت‌گذاری و دستیار هوشمند کافه</h1>
+      <p class="lead">چایو به کافه می‌گوید چه چیزی در انبار دارد، هر محصول واقعاً چقدر تمام می‌شود، چه قیمتی بگذارد و چقدر سود می‌کند. یک دستیار هوش مصنوعی هم هر کاری را با یک جملهٔ ساده انجام می‌دهد.</p>
+      <div class="facts">
+        <div class="fact"><b class="num" data-count="3">۳</b><span>فاز کاری</span></div>
+        <div class="fact"><b class="num" data-count="36">۳۶</b><span>هفته (حدود ۹ ماه)</span></div>
+        <div class="fact"><b class="num" data-count="3965">۳٬۹۶۵</b><span>میلیون تومان</span></div>
+      </div>
+      <p class="meta">۲۴ آبان ۱۴۰۵ · اعتبار قیمت‌ها: ۳۰ روز</p>
+    </div>
+    <svg class="glass" viewBox="0 0 120 170" role="img" aria-label="استکان چای">
+      <g class="steam"><path d="M46 50c-8-10 8-16 0-28"/><path d="M60 46c-8-10 8-16 0-28"/><path d="M74 50c-8-10 8-16 0-28"/></g>
+      <path d="M38 62h44c2 16-10 22-10 36s12 20 10 40c-1 10-8 14-22 14s-21-4-22-14c-2-20 10-26 10-40S36 78 38 62z" fill="none" stroke="#d9b96a" stroke-width="2"/>
+      <path d="M41 70h38c1 11-9 17-9 28s11 19 9 38c-1 7-7 10-19 10s-18-3-19-10c-2-19 9-27 9-38s-10-17-9-28z" fill="#b5532a" opacity=".85"/>
+      <ellipse cx="60" cy="158" rx="40" ry="6" fill="none" stroke="#d9b96a" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="tiles" aria-hidden="true"></div>
+</header>
+
+<nav class="nav" aria-label="بخش‌ها"><div class="wrap" id="nav">
+  <a href="#summary">خلاصه</a><a href="#problem">مسئله</a><a href="#how">ساختار</a><a href="#assistant">دستیار هوشمند</a><a href="#phases">فازها</a><a href="#roadmap">نقشهٔ راه</a><a href="#cost">تیم و هزینه</a><a href="#tech">فناوری</a><a href="#risks">ریسک‌ها</a><a href="#faq">پرسش‌ها</a><a href="#next">گام بعد</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="summary">
+  <div class="sec-head"><i class="star"></i><h2>خلاصه</h2></div>
+  <p class="lede">پیشنهاد ما ساخت چایو در <b>سه فاز و حدود ۹ ماه</b> با هزینهٔ <b>حدود ۳٫۹۷ میلیارد تومان</b> است (با ۱۰٪ ذخیرهٔ احتیاطی: ۴٫۳۶ میلیارد). در پایان هر فاز یک نسخهٔ کامل و قابل استفاده تحویل می‌گیرید؛ پس می‌توانید بعد از هر فاز توقف کنید و آنچه ساخته شده برایتان می‌ماند.</p>
+  <div class="tbl reveal"><table>
+    <thead><tr><th>فاز</th><th>چه چیزی تحویل می‌گیرید</th><th class="n">مدت</th><th class="n">هزینه (میلیون تومان)</th></tr></thead>
+    <tbody>
+      <tr><td>۱. هستهٔ سامانه (<span class="en">MVP</span>)</td><td>انبار، دستور تهیه، تولید، فروش، قیمت‌گذاری، گزارش‌ها، پنل مدیریت تحت وب</td><td class="n">۱۴ هفته</td><td class="n">۱٬۳۶۷</td></tr>
+      <tr><td>۲. دستیار هوشمند و برنامه‌ریزی</td><td>دستیار <span class="en">AI</span>، صفحهٔ فروش تبلت، فهرست خرید، تحلیل منو، خروجی <span class="en">Excel</span></td><td class="n">۱۰ هفته</td><td class="n">۱٬۱۸۰</td></tr>
+      <tr><td>۳. عملیات پیشرفته</td><td>تاریخ انقضا، محل‌های نگهداری، بستن شیفت، پیش‌بینی تقاضا، فرمان صوتی</td><td class="n">۱۲ هفته</td><td class="n">۱٬۴۱۸</td></tr>
+      <tr class="total"><td>جمع</td><td></td><td class="n">۳۶ هفته</td><td class="n">۳٬۹۶۵</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="problem">
+  <div class="sec-head"><i class="star"></i><h2>مسئله و راه‌حل چایو</h2></div>
+  <p>بیشتر کافه‌ها نمی‌دانند یک برش کیک واقعاً چقدر برایشان تمام می‌شود. قیمت را حدسی می‌گذارند و آخر ماه از زیان باخبر می‌شوند. چایو عدد دقیق را جای حدس می‌گذارد.</p>
+  <div class="cards">
+    <div class="card reveal"><h3>یک فهرست برای همه‌چیز</h3><p>آرد، کیک، برش کیک و پیشنهاد «چای + کیک» همه «کالا» هستند. هر محصول با دستور تهیه‌اش از کالاهای موجود ساخته می‌شود و هیچ‌چیز دو بار وارد نمی‌شود.</p></div>
+    <div class="card reveal"><h3>انباری که خودش حساب می‌کند</h3><p>پختن ۲ کیک، آرد و شکر و تخم‌مرغ و کره را خودکار کم می‌کند. فروش لاته، شیر و قهوه‌اش را مصرف می‌کند. هر تغییر یا کامل انجام می‌شود یا اصلاً انجام نمی‌شود.</p></div>
+    <div class="card reveal"><h3>بهای واقعی، قیمت پیشنهادی</h3><p>چایو بهای خرید هر مادهٔ اولیه را نگه می‌دارد و در همهٔ دستورها جمع می‌زند. قیمتی پیشنهاد می‌دهد که به حاشیه سود هدف برسد و وقتی گرانی مواد سود را کم کند هشدار می‌دهد.</p></div>
+    <div class="card reveal"><h3>آمار روشن</h3><p>گزارش روزانه، هفتگی و ماهانه: هزینهٔ مواد اولیه، فروش، بهای تمام‌شده، سود، حاشیه سود، ضایعات و ارزش انبار.</p></div>
+    <div class="card reveal"><h3>اشتباه قابل جبران، سابقه امن</h3><p>هیچ‌چیز بی‌صدا ویرایش یا حذف نمی‌شود. اصلاح به‌صورت «برگشت» ثبت می‌شود و گزارش‌ها همیشه با هم می‌خوانند.</p></div>
+    <div class="card reveal"><h3>دستیار برای هر کار</h3><p>بنویسید یا بگویید «۱۰ کیلو آرد خریدم کیلویی ۴۲ هزار» یا «این هفته چقدر سود کردیم؟». دستیار بعد از تأیید شما انجامش می‌دهد.</p></div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="sec-head"><i class="star"></i><h2>سامانه چطور کار می‌کند</h2></div>
+  <p>همهٔ صفحه‌ها و دستیار هوشمند فقط از راه یک <span class="en">API</span> کار می‌کنند. پس دسترسی‌ها و قواعد برای همه یکسان است، کار از هر جا که شروع شود.</p>
+  <div class="arch reveal">
+    <div class="row">
+      <div class="box"><b>پنل مدیریت تحت وب</b><span>کالا، انبار، قیمت، گزارش</span><span>دسکتاپ و تبلت</span></div>
+      <div class="box"><b>صفحهٔ فروش تبلت</b><span>فروش سریع پشت پیشخوان</span><span>در فاز ۲ اضافه می‌شود</span></div>
+      <div class="box key"><b>دستیار هوشمند (<span class="en">AI</span>)</b><span>فرمان به فارسی یا انگلیسی</span><span>پیش‌نمایش می‌دهد، شما تأیید می‌کنید</span></div>
+    </div>
+    <div class="arrows" aria-hidden="true"><span>↓</span><span>↓</span><span>↓</span></div>
+    <div class="box wide"><b><span class="en">Chaayo API · ASP.NET Core, .NET 10</span></b><span>دسترسی‌ها و قواعد کاری یکسان برای همهٔ صفحه‌ها و دستیار · هر تغییر انبار «همه یا هیچ» است و در سابقه ثبت می‌شود</span></div>
+    <div class="arrows" aria-hidden="true"><span>↓</span><span>↓</span><span>↓</span></div>
+    <div class="row">
+      <div class="box"><b>پایگاه‌داده <span class="en">PostgreSQL</span></b><span>کالا، دستور تهیه، موجودی، فروش</span><span><span class="en">Backup</span> روزانه، نگهداری ۳۰ روز</span></div>
+      <div class="box"><b>کارهای پس‌زمینه</b><span>هشدار کمبود موجودی و افت سود</span><span>خلاصهٔ روزانه برای مالک</span></div>
+      <div class="box"><b>مدل هوش مصنوعی</b><span>پشت یک رابط قابل تعویض</span><span><span class="en">Claude Opus 5.5</span> یا مدل دیگر</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="assistant">
+  <div class="sec-head"><i class="star"></i><h2>دستیار هوشمند</h2></div>
+  <p>دستیار یک نوار فرمان است که در همهٔ صفحه‌ها در دسترس است و هر کاری را که کاربر واردشده مجاز به انجامش باشد انجام می‌دهد. در فاز ۲ با پوشش همهٔ امکانات فاز ۱ و ۲ می‌آید و در فاز ۳ فرمان صوتی و هشدارهای پیش‌دستانه به آن اضافه می‌شود.</p>
+  <div class="tbl reveal"><table>
+    <thead><tr><th>شما می‌گویید</th><th>دستیار انجام می‌دهد</th></tr></thead>
+    <tbody>
+      <tr><td class="say">«۱۰ کیلو آرد از گلستان خریدم، کیلویی ۴۲ هزار»</td><td>خرید را آماده می‌کند و نشان می‌دهد؛ بعد از تأیید شما ثبت می‌کند</td></tr>
+      <tr><td class="say">«۳ تا کیک درست کن»</td><td>دستور تهیه و موجودی را بررسی می‌کند، کمبودها را می‌گوید و بعد از تأیید تولید را ثبت می‌کند</td></tr>
+      <tr><td class="say">«۲ تا چای + کیک بفروش»</td><td>فروش را ثبت می‌کند و برش کیک و بطری چای را از انبار کم می‌کند</td></tr>
+      <tr><td class="say">«این هفته چقدر سود کردیم؟»</td><td>از روی گزارش‌ها جواب می‌دهد، همراه با اعداد پشت آن</td></tr>
+      <tr><td class="say">«چرا سود آبان کم شد؟»</td><td>دوره‌ها را مقایسه می‌کند و علت‌ها را نام می‌برد (گرانی مواد، ضایعات، افت فروش)</td></tr>
+      <tr><td class="say">«قیمت لاته را بگذار روی قیمت پیشنهادی»</td><td>قیمت و حاشیه سود قبلی و جدید را نشان می‌دهد؛ بعد از تأیید تغییر می‌دهد</td></tr>
+      <tr><td class="say">«برای فردا چه چیزهایی باید بخرم؟»</td><td>از موجودی و برنامهٔ تولید، فهرست خرید می‌سازد</td></tr>
+    </tbody>
+  </table></div>
+  <h3>چطور امن می‌ماند</h3>
+  <ul class="plain">
+    <li><b>همان دسترسی کاربر.</b> دستیار همان <span class="en">API</span> صفحه‌ها را صدا می‌زند؛ پس دستیارِ صندوق‌دار نمی‌تواند قیمت عوض کند.</li>
+    <li><b>هیچ تغییری بدون تأیید.</b> هر ثبت (خرید، فروش، تولید، تغییر قیمت، بایگانی) اول به‌صورت کارت پیش‌نمایش نشان داده می‌شود. مبالغ بزرگ تأیید دوم می‌خواهند.</li>
+    <li><b>سابقهٔ کامل.</b> هر کار با برچسب «از طریق دستیار» به نام همان کاربر ثبت می‌شود و مثل هر عملیات دیگری قابل برگشت است.</li>
+    <li><b>بدون ثبت تکراری.</b> هر فرمان تأییدشده یک کلید یک‌بارمصرف دارد؛ تلاش دوباره، آن را دو بار ثبت نمی‌کند.</li>
+    <li><b>داده، دستور نیست.</b> نام کالا، یادداشت و توضیحات فقط «داده» حساب می‌شوند؛ متنی که در یک رکورد نوشته شده نمی‌تواند کنترل دستیار را به دست بگیرد.</li>
+  </ul>
+  <h3>هزینهٔ ماهانهٔ استفاده</h3>
+  <p class="muted">جدا از هزینهٔ ساخت است. با حدود ۱۵۰ فرمان در روز:</p>
+  <div class="tbl reveal"><table>
+    <thead><tr><th>مدل</th><th>کیفیت</th><th class="n">برآورد هزینه در ماه</th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Claude Opus 5.5</span> (پیشنهاد ما)</td><td>بهترین درک از فرمان‌های ترکیبی فارسی و انگلیسی و کارهای چندمرحله‌ای</td><td class="n">حدود ۱۵۰ تا ۲۵۰ دلار</td></tr>
+      <tr><td><span class="en">Claude Haiku 5.5</span></td><td>برای فرمان‌های ساده خوب است؛ در پرسش‌های تحلیلی ضعیف‌تر</td><td class="n">حدود ۵ تا ۱۵ دلار</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">دستیار پشت یک رابط قابل تعویض ساخته می‌شود؛ پس مدل بدون دوباره‌کاری عوض می‌شود. پیش از شروع فاز ۲ باید ارائه‌دهنده‌ای که قانوناً بتواند به کسب‌وکار سرویس بدهد تأیید شود (بخش ریسک‌ها).</p>
+</section>
+
+<section id="phases">
+  <div class="sec-head"><i class="star"></i><h2>سه فاز کار</h2></div>
+  <p>طراحی سامانه انجام شده است (نیازمندی‌ها، مدل داده، قواعد کاری، گزارش‌ها و <span class="en">API</span>). هر فاز بخشی از آن را به نرم‌افزار قابل استفاده تبدیل می‌کند.</p>
+
+  <article class="phase reveal">
+    <header><h3>فاز ۱ · هستهٔ سامانه (<span class="en">MVP</span>)</h3><span class="pill">۱۴ هفته</span><span class="pill">۱٬۳۶۷ میلیون تومان</span></header>
+    <p>در پایان این فاز، کار روزانهٔ کافه روی چایو انجام می‌شود.</p>
+    <ul class="plain">
+      <li><b>فهرست کالا:</b> کالای ساده و ترکیبی، دستور تهیهٔ نسخه‌دار با بازده («۱ کیک = ۸ برش»)، دسته‌بندی، واحدها، بایگانی و حذف امن.</li>
+      <li><b>عملیات انبار:</b> خرید، تولید با پیش‌نمایش کمبود، فروش (شامل کالاهای <span class="en">Made-to-order</span> مثل چای + کیک)، ضایعات با ذکر علت، اصلاح، انبارگردانی و برگشت یا اصلاح اشتباه‌ها.</li>
+      <li><b>قیمت‌گذاری:</b> میانگین بهای خودکار، جمع بهای دستور تهیه، قیمت پیشنهادی از روی حاشیه سود هدف، هشدار افت سود، ریز بها.</li>
+      <li><b>انبار:</b> فهرست زندهٔ موجودی با ارزش و علامت کمبود، سابقهٔ کامل هر کالا و «الان چقدر می‌توانم بسازم؟».</li>
+      <li><b>گزارش‌ها:</b> <span class="en">Dashboard</span>، سود و زیان، فروش به تفکیک کالا، خرید، ضایعات و ارزش انبار؛ روزانه، هفتگی، ماهانه یا بازهٔ دلخواه.</li>
+      <li><b>پنل مدیریت تحت وب</b> (دسکتاپ و تبلت)، کاربران با نقش (مالک، سرپرست، کارمند)، تنظیمات، <span class="en">Backup</span> روزانه.</li>
+    </ul>
+    <p class="gate"><b>شرط ورود به فاز ۲:</b> قبولی همهٔ سناریوهای پذیرش، به‌علاوهٔ ۲ هفته اجرای آزمایشی (<span class="en">Pilot</span>) در کافه با تطبیق شمارش انبار و سامانه.</p>
+  </article>
+
+  <article class="phase reveal">
+    <header><h3>فاز ۲ · دستیار هوشمند و برنامه‌ریزی</h3><span class="pill">۱۰ هفته</span><span class="pill">۱٬۱۸۰ میلیون تومان</span></header>
+    <p>سامانه فقط ثبت نمی‌کند؛ برای شما کار می‌کند.</p>
+    <ul class="plain">
+      <li><b>دستیار هوشمند</b> (متنی، فارسی و انگلیسی) برای همهٔ امکانات فاز ۱ و ۲، با پیش‌نمایش و تأیید برای هر تغییر.</li>
+      <li><b>صفحهٔ فروش سریع</b> برای تبلت پیشخوان: دکمه‌های بزرگ، موارد پرفروش، زبانهٔ دسته‌ها.</li>
+      <li><b>فهرست کمبود و فهرست خرید</b> به تفکیک تأمین‌کننده.</li>
+      <li><b>برنامه‌ریزی تولید:</b> برنامهٔ فردا را وارد کنید، مواد لازم را در برابر موجودی ببینید.</li>
+      <li><b>سابقهٔ قیمت تأمین‌کننده‌ها</b> و <b>واحد خرید</b> («۱ شانه = ۳۰ تخم‌مرغ»).</li>
+      <li><b>مهندسی منو (<span class="en">Menu Engineering</span>):</b> نشان می‌دهد کدام کالا را تبلیغ کنید، قیمتش را عوض کنید یا حذف کنید.</li>
+      <li><b>پیام خلاصهٔ روزانه</b> برای مالک (تلگرام یا ایمیل) و <b>خروجی <span class="en">CSV/Excel</span></b> از هر گزارش.</li>
+    </ul>
+    <p class="gate"><b>شرط ورود به فاز ۳:</b> دستیار دست‌کم ۹۵٪ از یک مجموعهٔ آزمون ۲۰۰ فرمانی را درست انجام دهد و هیچ تغییری بدون تأیید رخ ندهد.</p>
+  </article>
+
+  <article class="phase reveal">
+    <header><h3>فاز ۳ · عملیات پیشرفته</h3><span class="pill">۱۲ هفته</span><span class="pill">۱٬۴۱۸ میلیون تومان</span></header>
+    <p>ضایعات کمتر، کنترل دقیق‌تر و برنامه‌ریزی برای آینده.</p>
+    <ul class="plain">
+      <li><b>تاریخ انقضا:</b> اول موجودی قدیمی‌تر مصرف می‌شود؛ هشدار «فردا منقضی می‌شود».</li>
+      <li><b>محل‌های نگهداری</b> (یخچال، انبار، پیشخوان) و جابه‌جایی بین آن‌ها.</li>
+      <li><b>بستن شیفت (<span class="en">Z-report</span>):</b> وجه نقد مورد انتظار در برابر شمارش‌شده.</li>
+      <li><b>پیش‌بینی تقاضا:</b> پیشنهاد مقدار تولید برای هر روز هفته از روی فروش گذشته.</li>
+      <li><b>اسکن بارکد و <span class="en">SKU</span></b> برای خرید و شمارش سریع‌تر.</li>
+      <li><b>ارتقای دستیار:</b> فرمان صوتی و هشدارهای پیش‌دستانه مثل «کره ۲۰٪ گران شده؛ حاشیه سود کیک به ۵۶٪ رسیده».</li>
+    </ul>
+    <p class="gate"><b>بعد از فاز ۳ (قیمت‌گذاری نشده):</b> پشتیبانی از چند شعبه با گزارش تجمیعی.</p>
+  </article>
+</section>
+
+<section id="roadmap">
+  <div class="sec-head"><i class="star"></i><h2>نقشهٔ راه</h2></div>
+  <p>هر فاز فقط بعد از قبولی شرط فاز قبل شروع می‌شود. با در نظر گرفتن تعطیلات نوروز، کل برنامه حدود ۹ ماه از تاریخ شروع طول می‌کشد.</p>
+  <div class="road" id="road">
+    <div class="ph p1"><b>فاز ۱ · هسته</b><span>انبار، دستور تهیه، فروش، قیمت‌گذاری، گزارش، پنل وب</span><em>۱۴ هفته</em></div>
+    <div class="ph p2"><b>فاز ۲ · <span class="en">AI</span></b><span>دستیار هوشمند، صفحهٔ فروش، فهرست خرید</span><em>۱۰ هفته</em></div>
+    <div class="ph p3"><b>فاز ۳ · پیشرفته</b><span>انقضا، محل نگهداری، شیفت، پیش‌بینی، صوت</span><em>۱۲ هفته</em></div>
+  </div>
+  <div class="gates" aria-hidden="true"><div class="g1">قبولی <span class="en">Pilot</span> · هفتهٔ ۱۴</div><div class="g2">دقت ۹۵٪ دستیار · هفتهٔ ۲۴</div><div class="g3">تحویل نهایی · هفتهٔ ۳۶</div></div>
+</section>
+
+<section id="cost">
+  <div class="sec-head"><i class="star"></i><h2>تیم و هزینه</h2></div>
+  <p>هزینهٔ ساخت هر سه فاز <b>۳٬۹۶۵ میلیون تومان</b> است و بر پایهٔ حقوق‌های بازار تهران در سال ۱۴۰۵ محاسبه شده. هر فاز شامل طراحی <span class="en">UI/UX</span>، <span class="en">Backend</span>، <span class="en">Frontend</span>، آزمون، استقرار و یک ماه رفع اشکال پس از تحویل است.</p>
+  <div class="bars reveal" id="bars">
+    <div class="bar"><span>فاز ۱ · هسته</span><div class="track"><div class="fill" style="--w:96.4%"></div><span>۱٬۳۶۷</span></div></div>
+    <div class="bar"><span>فاز ۲ · دستیار هوشمند</span><div class="track"><div class="fill" style="--w:83.2%"></div><span>۱٬۱۸۰</span></div></div>
+    <div class="bar"><span>فاز ۳ · پیشرفته</span><div class="track"><div class="fill" style="--w:100%"></div><span>۱٬۴۱۸</span></div></div>
+  </div>
+  <p><b>نرخ‌ها چطور تعیین شده‌اند:</b> نرخ ماهانه = میانگین حقوق تهران × ۱٫۵ (برای بیمه، ابزار، تجهیزات و مدیریت). حقوق <span class="en">.NET</span> و <span class="en">React</span> از گزارش ۱۴۰۵ ایران‌تلنت است. نقش‌های ستاره‌دار عدد منتشرشده ندارند و برآورد ما هستند.</p>
+  <div class="tbl reveal"><table>
+    <thead><tr><th>نقش</th><th class="n">نرخ ماهانه (م. تومان)</th><th class="n">فاز ۱ (نفر-ماه)</th><th class="n">فاز ۲</th><th class="n">فاز ۳</th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Tech Lead</span> / برنامه‌نویس ارشد <span class="en">.NET</span></td><td class="n">۱۳۵</td><td class="n">۳٫۲۵</td><td class="n">۲٫۵</td><td class="n">۳٫۰</td></tr>
+      <tr><td>برنامه‌نویس میان‌رده <span class="en">.NET</span></td><td class="n">۸۷</td><td class="n">۲٫۵</td><td class="n">—</td><td class="n">۲٫۰</td></tr>
+      <tr><td>برنامه‌نویس <span class="en">Frontend (React)</span></td><td class="n">۱۲۰</td><td class="n">۲٫۷۵</td><td class="n">۲٫۲۵</td><td class="n">۲٫۵</td></tr>
+      <tr><td>مهندس <span class="en">AI</span>*</td><td class="n">۱۵۰</td><td class="n">—</td><td class="n">۲٫۰</td><td class="n">۱٫۵</td></tr>
+      <tr><td>طراح <span class="en">UI/UX</span>*</td><td class="n">۹۰</td><td class="n">۱٫۲۵</td><td class="n">۰٫۷۵</td><td class="n">۰٫۷۵</td></tr>
+      <tr><td>آزمونگر (<span class="en">QA</span>)*</td><td class="n">۶۰</td><td class="n">۱٫۵</td><td class="n">۱٫۲۵</td><td class="n">۱٫۵</td></tr>
+      <tr><td>مدیر پروژه / تحلیلگر* (پاره‌وقت)</td><td class="n">۱۰۰</td><td class="n">۱٫۳</td><td class="n">۱٫۰</td><td class="n">۱٫۲</td></tr>
+      <tr><td><span class="en">DevOps</span>* (پاره‌وقت)</td><td class="n">۱۲۰</td><td class="n">۰٫۴</td><td class="n">۰٫۲۵</td><td class="n">۰٫۳</td></tr>
+      <tr class="total"><td>هزینهٔ فاز (میلیون تومان)</td><td></td><td class="n">۱٬۳۶۷</td><td class="n">۱٬۱۸۰</td><td class="n">۱٬۴۱۸</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>مقایسه با بازار:</b> شرکت‌های نرم‌افزار سفارشی برای یک سامانهٔ یکپارچه (مثل حسابداری همراه با انبار) ۵۰۰ میلیون تا ۱٫۵ میلیارد تومان و برای پلتفرم سازمانی از ۱٫۵ میلیارد به بالا اعلام می‌کنند. فاز ۱ در بازهٔ اول و مجموع سه فاز با دستیار <span class="en">AI</span> در بازهٔ دوم قرار می‌گیرد.</p>
+  <p><b>پرداخت هر فاز:</b> ۳۰٪ در شروع، ۴۰٪ در دموی میانهٔ فاز، ۳۰٪ هنگام تحویل و پذیرش.</p>
+  <h3>خارج از هزینهٔ ساخت</h3>
+  <ul class="plain">
+    <li>میزبانی سرور: حدود ۳ تا ۸ میلیون تومان در ماه.</li>
+    <li>هزینهٔ استفاده از مدل <span class="en">AI</span> (بخش دستیار هوشمند).</li>
+    <li>پشتیبانی اختیاری پس از تحویل: معمولاً سالانه ۱۵ تا ۲۰٪ هزینهٔ ساخت.</li>
+    <li>ذخیرهٔ احتیاطی (<span class="en">Contingency</span>) ۱۰٪، معادل ۳۹۷ میلیون تومان، برای تغییرات دامنهٔ کار پیشنهاد می‌شود.</li>
+  </ul>
+  <p class="muted">قیمت‌ها ۳۰ روز اعتبار دارند. به‌دلیل تورم، فازهایی که دیرتر شروع می‌شوند با نرخ همان ماه دوباره قیمت‌گذاری می‌شوند.</p>
+</section>
+
+<section id="tech">
+  <div class="sec-head"><i class="star"></i><h2>فناوری و کیفیت</h2></div>
+  <p>چایو با فناوری‌های رایج و دارای پشتیبانی بلندمدت ساخته می‌شود؛ هر تیم توانمندی می‌تواند آن را نگهداری کند.</p>
+  <div class="tbl reveal"><table>
+    <thead><tr><th>بخش</th><th>فناوری</th><th>چرا</th></tr></thead>
+    <tbody>
+      <tr><td><span class="en">Backend</span></td><td><span class="en">ASP.NET Core Web API, .NET 10 (C#)</span></td><td>سریع و امن؛ پشتیبانی رسمی تا نوامبر ۲۰۲۸</td></tr>
+      <tr><td>پایگاه‌داده</td><td><span class="en">PostgreSQL</span></td><td>رایگان و مطمئن؛ قواعد کاری را در خود پایگاه‌داده هم اعمال می‌کند</td></tr>
+      <tr><td>پنل وب و صفحهٔ فروش</td><td><span class="en">React</span> (تأیید نهایی پیش از طراحی رابط فاز ۱)</td><td>در هر مرورگری کار می‌کند؛ آمادهٔ راست‌به‌چپ</td></tr>
+      <tr><td>دستیار هوشمند</td><td>رابط مستقل از ارائه‌دهنده؛ مدل مرجع <span class="en">Claude Opus 5.5</span></td><td>تعویض مدل بدون دوباره‌کاری</td></tr>
+      <tr><td>میزبانی</td><td><span class="en">Docker</span> روی <span class="en">VPS</span> یا رایانهٔ خود کافه</td><td>نصب با یک فرمان؛ <span class="en">Backup</span> روزانه با نگهداری ۳۰ روز</td></tr>
+    </tbody>
+  </table></div>
+  <h3>تعهدهای کیفیت</h3>
+  <ul class="plain">
+    <li>هر قاعدهٔ کاری طراحی، آزمون خودکار دارد و آزمون‌ها روی پایگاه‌دادهٔ واقعی اجرا می‌شوند.</li>
+    <li>تغییرات انبار «همه یا هیچ» هستند و دو نفر نمی‌توانند آخرین کالا را هم‌زمان بفروشند.</li>
+    <li>مبالغ و مقادیر دقیق ذخیره می‌شوند (بدون خطای گرد کردن).</li>
+    <li>ثبت فروش کمتر از ۰٫۳ ثانیه و گزارش ماهانه کمتر از ۲ ثانیه.</li>
+    <li>رمزها هش می‌شوند، ارتباط فقط <span class="en">HTTPS</span> است و هر نقش فقط آنچه باید را می‌بیند.</li>
+    <li>رابط فارسی و انگلیسی، با تاریخ شمسی در صورت انتخاب.</li>
+  </ul>
+</section>
+
+<section id="risks">
+  <div class="sec-head"><i class="star"></i><h2>فرض‌ها و ریسک‌ها</h2></div>
+  <p>برنامه بر این فرض است: یک کافه، یک واحد پول و یک تصمیم‌گیرنده که برای جلسهٔ مرور هفتگی در دسترس باشد.</p>
+  <div class="tbl reveal"><table>
+    <thead><tr><th>ریسک</th><th>اثر</th><th>راهکار ما</th></tr></thead>
+    <tbody>
+      <tr><td>دسترسی به ارائه‌دهندهٔ <span class="en">AI</span>: سرویس‌های بزرگ ممکن است قانوناً به کسب‌وکارهای ایران سرویس ندهند و پرداخت ارزی است</td><td>توقف یا گران‌تر شدن دستیار در فاز ۲</td><td>تأیید ارائه‌دهندهٔ مجاز پیش از فاز ۲؛ رابط دستیار از مدل متن‌باز روی سرور خودتان هم پشتیبانی می‌کند</td></tr>
+      <tr><td>تورم و نرخ ارز</td><td>گران‌تر شدن فازهای بعدی به تومان</td><td>هر فاز هنگام شروع قیمت‌گذاری می‌شود؛ اعتبار این پیشنهاد ۳۰ روز است</td></tr>
+      <tr><td>تعطیلات نوروز</td><td>حدود ۲ هفته توقف، اگر فازی به پایان اسفند بخورد</td><td>در زمان‌بندی دیده شده است</td></tr>
+      <tr><td>بزرگ شدن دامنهٔ کار در میانهٔ فاز</td><td>تأخیر و هزینهٔ اضافه</td><td>تغییرها به فاز بعد می‌روند مگر جایگزین کار هم‌اندازه شوند؛ ۱۰٪ ذخیرهٔ احتیاطی</td></tr>
+      <tr><td>دادهٔ نامرتب موجودی اولیه</td><td>بهای نادرست از روز اول</td><td>ورود راهنمایی‌شدهٔ موجودی اولیه و یک انبارگردانی در دورهٔ <span class="en">Pilot</span></td></tr>
+      <tr><td>پذیرش از سوی کارکنان</td><td>ثبت دیرهنگام یا ثبت نشدن فروش</td><td>صفحهٔ فروش تبلت، آموزش کوتاه و دستیار برای ثبت سریع</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted"><b>شامل نمی‌شود:</b> حسابداری و اظهارنامهٔ مالیاتی، حقوق و دستمزد، سفارش آنلاین، باشگاه مشتریان، سخت‌افزار (چاپگر، ترازو، تبلت) و پشتیبانی از چند شعبه.</p>
+</section>
+
+<section id="faq">
+  <div class="sec-head"><i class="star"></i><h2>پرسش‌های پرتکرار</h2></div>
+  <details><summary>اگر فقط فاز ۱ را بخواهیم چه؟</summary><p>مشکلی نیست. هر فاز با یک نسخهٔ کامل و قابل استفاده تمام می‌شود. بعد از فاز ۱ کافه می‌تواند کار روزانه‌اش را با چایو انجام دهد و هر زمان خواستید فاز بعد شروع می‌شود (با قیمت همان زمان).</p></details>
+  <details><summary>دستیار هوشمند می‌تواند اشتباهی چیزی را خراب کند؟</summary><p>هیچ تغییری بدون تأیید شما ثبت نمی‌شود. دستیار اول پیش‌نمایش نشان می‌دهد، فقط در حد دسترسی همان کاربر کار می‌کند و هر کارش در سابقه ثبت و قابل برگشت است.</p></details>
+  <details><summary>چرا دستیار در فاز ۲ است، نه فاز ۱؟</summary><p>دستیار روی همان <span class="en">API</span> و قواعد فاز ۱ کار می‌کند. اول باید آن هسته ساخته و در کافه آزموده شود تا دستیار روی پایهٔ مطمئن سوار شود.</p></details>
+  <details><summary>هزینهٔ ماهانه بعد از ساخت چقدر است؟</summary><p>میزبانی سرور حدود ۳ تا ۸ میلیون تومان در ماه. از فاز ۲ به بعد هزینهٔ مدل <span class="en">AI</span> هم اضافه می‌شود: حدود ۱۵۰ تا ۲۵۰ دلار در ماه با مدل پیشنهادی، یا ۵ تا ۱۵ دلار با مدل سبک‌تر. پشتیبانی سالانه اختیاری است.</p></details>
+  <details><summary>اگر بخواهیم وسط کار چیزی اضافه کنیم؟</summary><p>درخواست‌های جدید به فاز بعد می‌روند، مگر اینکه جایگزین کاری هم‌اندازه در همان فاز شوند. ذخیرهٔ احتیاطی ۱۰٪ برای همین موارد پیشنهاد شده است.</p></details>
+  <details><summary>گزارش‌ها با ماه‌های شمسی کار می‌کنند؟</summary><p>بله، اگر انتخاب کنید. تقویم (شمسی یا میلادی)، روز شروع هفته و واحد پول (ریال یا تومان) از تصمیم‌های شروع کار هستند.</p></details>
+</section>
+
+<section id="next">
+  <div class="sec-head"><i class="star"></i><h2>تصمیم‌های لازم برای شروع</h2></div>
+  <p>با چهار پاسخ، فاز ۱ شروع می‌شود. علامت‌ها فقط روی دستگاه خودتان ذخیره می‌شوند.</p>
+  <div class="checks" id="checks">
+    <label><input type="checkbox" id="c1"><span>تأیید دامنه و قیمت فاز ۱ (۱٬۳۶۷ میلیون تومان، ۱۴ هفته)</span></label>
+    <label><input type="checkbox" id="c2"><span>تقویم گزارش‌ها: ماه‌های شمسی یا میلادی</span></label>
+    <label><input type="checkbox" id="c3"><span>واحد پول در برنامه: ریال یا تومان</span></label>
+    <label><input type="checkbox" id="c4"><span>تاریخ شروع و یک نفر رابط در کافه برای جلسه‌های مرور هفتگی</span></label>
+  </div>
+  <p class="done-note" id="doneNote" hidden>هر چهار تصمیم گرفته شد. فاز ۱ آمادهٔ شروع است.</p>
+  <p class="muted">پیش از فاز ۲: تأیید ارائه‌دهندهٔ <span class="en">AI</span> و بودجهٔ ماهانهٔ استفاده.</p>
+  <h3>نسخه‌های <span class="en">PDF</span></h3>
+  <div class="pdfs">
+    <a class="btn" href="https://github.com/MahdiMoosavi-dev/Chaayo/blob/main/docs/Chaayo-Proposal.fa.pdf">نسخهٔ فارسی (<span class="en">PDF</span>)</a>
+    <a class="btn" href="https://github.com/MahdiMoosavi-dev/Chaayo/blob/main/docs/Chaayo-Proposal.pdf">نسخهٔ انگلیسی (<span class="en">PDF</span>)</a>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <span>منابع: گزارش حقوق برنامه‌نویسان ایران‌تلنت (۱۴۰۵) · برآورد هزینهٔ نرم‌افزار سفارشی آرکوتک (۱۴۰۵) · نرخ‌های رسمی <span class="en">Anthropic API</span> (نوامبر ۲۰۲۶) · طراحی سامانهٔ چایو نسخهٔ <span class="en">0.2</span></span>
+  <span>چایو · ۲۴ آبان ۱۴۰۵</span>
+</div></footer>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bar=document.getElementById('bar');
+  function onScroll(){var h=document.documentElement.scrollHeight-innerHeight;bar.style.width=(h>0?Math.min(100,scrollY/h*100):0)+'%';}
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  // nav highlight
+  var links=[].slice.call(document.querySelectorAll('#nav a'));
+  if('IntersectionObserver' in window){
+    var spy=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);});}});},{rootMargin:'-30% 0px -60% 0px'});
+    document.querySelectorAll('main section').forEach(function(s){spy.observe(s);});
+  }
+
+  // reveal + bars + roadmap
+  if('IntersectionObserver' in window && !reduce){
+    root.classList.add('js');
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+    document.querySelectorAll('.reveal,#road').forEach(function(el){io.observe(el);});
+  }
+
+  // counters (the real value is already in the markup)
+  if(!reduce){
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var end=+el.getAttribute('data-count'),t0=null,fmt=new Intl.NumberFormat('fa-IR');
+      function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1100),v=Math.round(end*(1-Math.pow(1-p,3)));el.textContent=fmt.format(v);if(p<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    });
+  }
+
+  // decisions checklist, remembered on this device only
+  var boxes=[].slice.call(document.querySelectorAll('#checks input')),note=document.getElementById('doneNote'),KEY='chaayo-proposal-checks';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+  function save(s){try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}}
+  var state=load();
+  function refresh(){note.hidden=!boxes.every(function(b){return b.checked;});}
+  boxes.forEach(function(b){b.checked=!!state[b.id];b.addEventListener('change',function(){state[b.id]=b.checked;save(state);refresh();});});
+  refresh();
+})();
+</script>
+
+</body>
+</html>
