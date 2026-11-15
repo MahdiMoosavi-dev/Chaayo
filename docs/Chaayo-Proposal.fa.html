@@ -188,8 +188,21 @@ details p{padding-bottom:14px;color:var(--muted)}
 .extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
 .extra{border:1px dashed var(--gold);border-radius:6px;padding:10px 14px;font-size:14.5px;line-height:1.8}
 .extra b{display:block;color:var(--lapis)}
-@media (max-width:760px){.plans{grid-template-columns:1fr}}
-@media print{.toggle{display:none}.plan,.extra{break-inside:avoid}
+.life{background:var(--hero-bg);color:var(--hero-fg);border-radius:6px;padding:22px 22px 20px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px 28px;position:relative;overflow:hidden}
+.life::before{content:"";position:absolute;inset:6px;border:1px solid var(--hero-gold);border-radius:3px;opacity:.5;pointer-events:none}
+.life h3{color:var(--hero-gold);font-size:24px}
+.life .tag{font-size:13px;color:var(--hero-gold)}
+.life .big{font-family:var(--display);font-size:38px;line-height:1.4;font-variant-numeric:tabular-nums}
+.life .big small{font-family:var(--body);font-size:15px;color:var(--hero-gold);margin-inline-start:6px}
+.life p{font-size:15px;line-height:1.9;opacity:.95}
+.life ul{margin:0;padding-inline-start:1.2em;display:flex;flex-direction:column;gap:4px;font-size:14.5px;line-height:1.8}
+.life li::marker{color:var(--hero-gold)}
+.life .side{display:flex;flex-direction:column;gap:8px;min-width:0}
+.life .row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid color-mix(in srgb,var(--hero-gold) 35%,transparent);padding-block:5px;font-size:14px}
+.life .row:last-child{border-bottom:0}
+.life .row b{font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:760px){.plans{grid-template-columns:1fr}.life{grid-template-columns:1fr}}
+@media print{.toggle{display:none}.plan,.extra,.life{break-inside:avoid}.life{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .plans{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px;break-inside:avoid;padding-top:12px}
   .plan{padding:16px 12px 12px}.plan h3{font-size:19px}.plan ul{font-size:12.5px;line-height:1.7}.price b{font-size:22px}.price span{font-size:12px}.plan.best{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 
@@ -262,7 +275,7 @@ footer .wrap{padding-block:22px;font-size:13.5px;color:var(--muted);display:flex
 
 <section id="summary">
   <div class="sec-head"><i class="star"></i><h2>خلاصه</h2></div>
-  <p class="lede">پیشنهاد ما ساخت چایو در <b>سه فاز و حدود ۹ ماه</b> با هزینهٔ <b>حدود ۳٫۹۷ میلیارد تومان</b> است (با ۱۰٪ ذخیرهٔ احتیاطی: ۴٫۳۶ میلیارد). در پایان هر فاز یک نسخهٔ کامل و قابل استفاده تحویل می‌گیرید؛ پس می‌توانید بعد از هر فاز توقف کنید و آنچه ساخته شده برایتان می‌ماند. بعد از راه‌اندازی، چایو را می‌توان در سه پلن ماهانه به کافه‌های دیگر فروخت: پایه ۷۹۰ هزار، حرفه‌ای ۱٫۶۹ میلیون و هوشمند ۳٫۴۹ میلیون تومان (<a href="#plans">پلن‌های اشتراک</a>).</p>
+  <p class="lede">پیشنهاد ما ساخت چایو در <b>سه فاز و حدود ۹ ماه</b> با هزینهٔ <b>حدود ۳٫۹۷ میلیارد تومان</b> است (با ۱۰٪ ذخیرهٔ احتیاطی: ۴٫۳۶ میلیارد). در پایان هر فاز یک نسخهٔ کامل و قابل استفاده تحویل می‌گیرید؛ پس می‌توانید بعد از هر فاز توقف کنید و آنچه ساخته شده برایتان می‌ماند. بعد از راه‌اندازی، چایو را می‌توان در سه پلن ماهانه به کافه‌های دیگر فروخت: پایه ۷۹۰ هزار، حرفه‌ای ۱٫۶۹ میلیون و هوشمند ۳٫۴۹ میلیون تومان. لایسنس دائمی هم ۸۹ میلیون تومان یک‌جاست و هزینهٔ هوش مصنوعی آن ماهانه پرداخت می‌شود (<a href="#plans">پلن‌های اشتراک</a>).</p>
   <div class="tbl reveal"><table>
     <thead><tr><th>فاز</th><th>چه چیزی تحویل می‌گیرید</th><th class="n">مدت</th><th class="n">هزینه (میلیون تومان)</th></tr></thead>
     <tbody>
@@ -493,6 +506,32 @@ footer .wrap{padding-block:22px;font-size:13.5px;color:var(--muted);display:flex
     <div class="extra"><b>راه‌اندازی: ۲٫۵ میلیون تومان (یک‌بار)</b>ورود موجودی اولیه و دستورهای تهیه، به‌علاوهٔ یک جلسه آموزش (اختیاری)</div>
     <div class="extra"><b>فرمان اضافهٔ دستیار</b>بستهٔ ۵۰۰ فرمانی: ۱۹۰ هزار تومان</div>
   </div>
+  <article class="life reveal" id="lifetime">
+    <div class="side">
+      <span class="tag">خرید یک‌باره، برای همیشه</span>
+      <h3>لایسنس دائمی چایو</h3>
+      <div class="big">۸۹ میلیون <small>تومان، یک‌بار</small></div>
+      <p>همهٔ امکانات پلن هوشمند (امکانات فاز ۳ هم وقتی ساخته شوند)، کاربر نامحدود، برای یک کافه. هزینهٔ هوش مصنوعی جدا و ماهانه، به اندازهٔ مصرف واقعی پرداخت می‌شود.</p>
+      <p>این مبلغ حدود ۲٫۷ سال اشتراک سالانهٔ پلن هوشمند (سالی ۳۳٫۵ میلیون) است؛ خریدار بعد از حدود ۳ سال سود می‌کند.</p>
+    </div>
+    <div class="side">
+      <div class="row"><span>راه‌اندازی و آموزش</span><b>در قیمت هست</b></div>
+      <div class="row"><span>به‌روزرسانی و پشتیبانی سال اول</span><b>در قیمت هست</b></div>
+      <div class="row"><span>پشتیبانی از سال دوم (اختیاری)</span><b>سالانه ۱۵٪، حدود ۱۳ میلیون</b></div>
+      <div class="row"><span>نصب روی سیستم خود کافه</span><b>رایگان</b></div>
+      <div class="row"><span>میزبانی روی سرور ما (اختیاری)</span><b>ماهانه ۴۹۰ هزار</b></div>
+      <div class="row"><span><span class="en">AI</span> با <span class="en">Haiku 5.5</span> (۱۵۰ فرمان در روز)</span><b>حدود ۹ دلار در ماه</b></div>
+      <div class="row"><span><span class="en">AI</span> ترکیبی، تحلیل با مدل قوی‌تر</span><b>حدود ۲۰ تا ۴۰ دلار</b></div>
+      <div class="row"><span><span class="en">AI</span> فقط با <span class="en">Opus 5.5</span></span><b>حدود ۱۵۰ تا ۲۵۰ دلار</b></div>
+    </div>
+  </article>
+  <h3>شرایط لایسنس دائمی</h3>
+  <ul class="plain">
+    <li><b>پرداخت هزینهٔ AI:</b> یا با کلید <span class="en">API</span> خود خریدار، که صورت‌حساب مستقیم از ارائه‌دهنده می‌آید، یا با شارژ اعتبار تومانی از ما به نرخ روز ارز به‌علاوهٔ ۲۰٪ کارمزد.</li>
+    <li><b>«دائمی» یعنی مالکیت نرم‌افزار</b> برای یک کافه، نه سرور رایگان. با نصب روی سیستم خود کافه، <span class="en">Backup</span> با خودشان است.</li>
+    <li><b>بدون قرارداد پشتیبانی سالانه</b>، نرم‌افزار با آخرین نسخه‌ای که گرفته کار می‌کند ولی نسخهٔ جدید و رفع اشکال نمی‌گیرد.</li>
+    <li><b>قیمت لایسنس هر ۳ ماه</b> با تورم بازبینی می‌شود؛ سفارش امضاشده با همان قیمت می‌ماند.</li>
+  </ul>
   <h3>مقایسه با رقبا</h3>
   <div class="tbl reveal"><table>
     <thead><tr><th>نرم‌افزار</th><th class="n">قیمت ماهانه (تومان)</th><th>ملاحظه</th></tr></thead>
@@ -558,6 +597,7 @@ footer .wrap{padding-block:22px;font-size:13.5px;color:var(--muted);display:flex
   <details><summary>هزینهٔ ماهانه بعد از ساخت چقدر است؟</summary><p>میزبانی سرور حدود ۳ تا ۸ میلیون تومان در ماه. از فاز ۲ به بعد هزینهٔ مدل <span class="en">AI</span> هم اضافه می‌شود: حدود ۱۵۰ تا ۲۵۰ دلار در ماه با مدل پیشنهادی، یا ۵ تا ۱۵ دلار با مدل سبک‌تر. پشتیبانی سالانه اختیاری است.</p></details>
   <details><summary>اگر بخواهیم وسط کار چیزی اضافه کنیم؟</summary><p>درخواست‌های جدید به فاز بعد می‌روند، مگر اینکه جایگزین کاری هم‌اندازه در همان فاز شوند. ذخیرهٔ احتیاطی ۱۰٪ برای همین موارد پیشنهاد شده است.</p></details>
   <details><summary>کافه‌های دیگر هم می‌توانند از چایو استفاده کنند؟</summary><p>بله، با اشتراک ماهانه یا سالانه در سه پلن پایه، حرفه‌ای و هوشمند (بخش پلن‌های اشتراک). پلن حرفه‌ای ۱۴ روز آزمایش رایگان دارد.</p></details>
+  <details><summary>می‌شود چایو را یک‌بار برای همیشه خرید؟</summary><p>بله، با لایسنس دائمی ۸۹ میلیون تومانی: همهٔ امکانات پلن هوشمند برای یک کافه، با راه‌اندازی و یک سال پشتیبانی. هزینهٔ هوش مصنوعی جدا و ماهانه است؛ با مدل پیش‌فرض حدود ۹ دلار در ماه برای ۱۵۰ فرمان در روز.</p></details>
   <details><summary>اگر فرمان‌های دستیار در یک ماه تمام شود چه؟</summary><p>بقیهٔ سامانه بدون تغییر کار می‌کند. برای ادامهٔ استفاده از دستیار می‌توانید بستهٔ ۵۰۰ فرمانی را به قیمت ۱۹۰ هزار تومان بخرید یا پلن را ارتقا دهید.</p></details>
   <details><summary>گزارش‌ها با ماه‌های شمسی کار می‌کنند؟</summary><p>بله، اگر انتخاب کنید. تقویم (شمسی یا میلادی)، روز شروع هفته و واحد پول (ریال یا تومان) از تصمیم‌های شروع کار هستند.</p></details>
 </section>
