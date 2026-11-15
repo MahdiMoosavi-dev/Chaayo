@@ -1,39 +1,42 @@
 # AGENTS.md — Chaayo (Cafeteria Inventory & Item Composition System)
 
 Instructions for AI coding agents (Claude Code, Codex, Copilot, Cursor, …) working in this repo.
-The source design is [cafeteria_inventory_system_design.docx](cafeteria_inventory_system_design.docx) (v0.1, 2026-11-15).
-If this file and the design doc disagree, ask; do not silently pick one.
 
-## Project summary
+## Current phase: DESIGN REVIEW
 
-Backend for a cafeteria inventory system. Every stockable thing (flour, sugar, cake, piece of cake,
-bottle of tea, "Tea + Cake" bundle) is one `Item`. Items can be composed of other items through a
-self-referencing `ItemComposition` table (nested to any depth). Producing a composite item deducts
-its components from stock and adds the finished item, atomically, with an audit trail.
+The system design lives in [docs/](docs/README.md) (v0.2). **Do not write implementation code until the owner approves the design.**
+Changes to the design go into the docs, with a new or updated entry in [docs/09-decisions.md](docs/09-decisions.md).
+The original v0.1 design is [cafeteria_inventory_system_design.docx](cafeteria_inventory_system_design.docx). Where it and `docs/` disagree, `docs/` wins.
+
+## Source of truth
+
+| Topic | Document |
+|---|---|
+| Requirements, glossary, roles | [docs/01-requirements.md](docs/01-requirements.md) |
+| Architecture, layers, tech stack | [docs/02-architecture.md](docs/02-architecture.md) |
+| **Data structure: tables, constraints** | [docs/03-data-model.md](docs/03-data-model.md) |
+| Domain model, invariants (INV-xx) | [docs/04-domain-model.md](docs/04-domain-model.md) |
+| Business processes, costing, pricing | [docs/05-business-processes.md](docs/05-business-processes.md) |
+| Reports and KPI formulas | [docs/06-reporting.md](docs/06-reporting.md) |
+| API | [docs/07-api.md](docs/07-api.md) |
+| Roadmap and MVP build order | [docs/08-features-roadmap.md](docs/08-features-roadmap.md) |
+| Decisions (ADR-xxx) | [docs/09-decisions.md](docs/09-decisions.md) |
 
 ## Tech stack
 
-- .NET 10 SDK, C#, ASP.NET Core Web API (controllers)
-- EF Core with PostgreSQL (Npgsql); migrations via `dotnet ef`
-- OpenAPI via `Microsoft.AspNetCore.OpenApi` + Swagger UI
-- xUnit for tests; integration tests run against a real PostgreSQL (Testcontainers), not the EF in-memory provider (it does not enforce transactions or constraints)
+.NET 10 · C# · ASP.NET Core Web API (controllers) · EF Core 10 + Npgsql · PostgreSQL 18 · xUnit + Testcontainers (real PostgreSQL; never the EF in-memory provider).
 
-## Solution layout (modular monolith)
+## Solution layout
 
 ```
-Chaayo.sln
-src/
-  Chaayo.Api/            # Controllers, DTOs, request validation, DI wiring, OpenAPI
-  Chaayo.Application/    # Use cases / services: ItemService, CompositionService, InventoryService, ProductionService
-  Chaayo.Domain/         # Entities, value objects, domain rules (no EF, no ASP.NET references)
-  Chaayo.Infrastructure/ # EF Core DbContext, entity configurations, migrations, repositories
-tests/
-  Chaayo.UnitTests/
-  Chaayo.IntegrationTests/
+src/Chaayo.Domain          entities, invariants, domain services (no EF, no ASP.NET)
+src/Chaayo.Application     use cases per module
+src/Chaayo.Infrastructure  EF Core, configurations, migrations, report SQL, jobs
+src/Chaayo.Api             controllers, DTOs, auth, OpenAPI
+tests/Chaayo.UnitTests, tests/Chaayo.IntegrationTests
 ```
 
-Dependency direction: Api → Application → Domain; Infrastructure → Application/Domain. Domain depends on nothing.
-Keep controllers thin: no business logic or DbContext access in controllers.
+Dependencies: Api → Application → Domain; Infrastructure → Application/Domain. Thin controllers.
 
 ## Commands
 
@@ -42,46 +45,20 @@ dotnet build
 dotnet test
 dotnet run --project src/Chaayo.Api
 dotnet ef migrations add <Name> --project src/Chaayo.Infrastructure --startup-project src/Chaayo.Api
-dotnet ef database update --project src/Chaayo.Infrastructure --startup-project src/Chaayo.Api
 ```
 
-## Domain model
+## Non-negotiable rules (details in the docs)
 
-| Entity | Key fields |
-|---|---|
-| `Item` | `Id`, `Name`, `Description?`, `Unit`, `IsActive`, `CreatedAt`, `UpdatedAt` |
-| `ItemComposition` | `Id`, `ParentItemId` → Item, `ComponentItemId` → Item, `Quantity` (per 1 parent), timestamps |
-| `StockBalance` | `ItemId` → Item, `Quantity`, concurrency token |
-| `InventoryMovement` | `Id`, `ItemId`, `QuantityDelta` (+/−), `Type` (Production, Purchase, Sale, Adjustment…), `OperationId`, `CreatedAt`, `CreatedBy` |
-
-## Invariants (enforce in code AND in the database where possible)
-
-1. `ItemComposition.Quantity > 0` (check constraint).
-2. Unique `(ParentItemId, ComponentItemId)`.
-3. `ParentItemId != ComponentItemId` (check constraint).
-4. No circular compositions (A → B → … → A). Validate in `CompositionService` before saving, by walking the component graph.
-5. Bundles reuse existing component items; never duplicate an item to use it as a component.
-6. A production operation runs in **one database transaction**: deduct every component, add the
-   finished item, and write all `InventoryMovement` rows with a shared `OperationId`. Any failure rolls back everything.
-7. Use optimistic concurrency (or row locks) on `StockBalance` so concurrent productions can't oversell.
-8. Use `decimal` for quantities, never `float`/`double`.
-9. Stock balances change only through movements; never update a balance without writing a movement.
-
-## Open business rules (do not guess, ask the user)
-
-- Virtual bundle vs. physically stocked composite: when does "Tea + Cake" deduct stock (at creation or at sale)?
-- Can composite items hold their own stock balance?
-- Composition versioning when a recipe is edited after production.
-- Negative stock allowed, or reject when insufficient? (Default until decided: **reject**.)
-- Unit set and conversions (g/kg, ml/l, piece, bottle).
-- Whether compositions are recipes (BOM), bundles, or both. This may need an item type/behaviour field.
+1. One `items` table; composition goes through versioned `recipes` + `recipe_lines` (parent → component).
+2. Stock changes only by appending `stock_movements` under an `inventory_operations` header, in **one transaction**, updating `stock_balances` in the same transaction. Never UPDATE or DELETE ledger rows; fix mistakes with a reversal.
+3. Lock balance rows `FOR UPDATE` in item-id order inside stock operations.
+4. Weighted average cost; production output cost = cost of the components consumed.
+5. Reject negative stock unless `business_settings.allow_negative_stock`.
+6. No circular recipes (graph check in the application; self-reference also blocked by a DB check).
+7. `decimal` for all money and quantities; UTC timestamps; UUID v7 keys.
+8. Archive items with history; hard-delete only items without history.
+9. Every INV-xx rule in docs/04 gets a test; error codes match the catalogue.
 
 ## Conventions
 
-- Nullable reference types and `TreatWarningsAsErrors` on.
-- Async all the way (`async`/`await`, pass `CancellationToken`).
-- Configure entities with `IEntityTypeConfiguration<T>`, not data annotations.
-- Return `ProblemDetails` for errors; map domain errors (e.g. `InsufficientStockException`, `CircularCompositionException`) to 4xx.
-- Timestamps in UTC (`DateTimeOffset`).
-- Every new service method gets tests; production logic needs tests for nested compositions, insufficient stock, rollback, and the audit trail.
-- Commit messages: Conventional Commits (`feat:`, `fix:`, `chore:` …).
+Nullable on, warnings as errors, async + `CancellationToken`, `IEntityTypeConfiguration<T>` (not annotations), ProblemDetails with a stable `code`, Conventional Commits.
