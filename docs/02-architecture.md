@@ -132,7 +132,7 @@ sequenceDiagram
 | Concern | Choice | Reason |
 |---|---|---|
 | Runtime | .NET 10 (LTS), C# | Your choice. Long-term support until 2028. |
-| Web | ASP.NET Core Web API, controllers | Clear structure, built-in OpenAPI |
+| Web | ASP.NET Core Web API, controllers ([ADR-016](09-decisions.md#adr-016), accepted) | One controller per module, built-in validation, ProblemDetails, OpenAPI. Backend only; the UI is a separate client. |
 | Data access | EF Core 10 + Npgsql | Migrations, LINQ, transactions. Raw SQL for heavy reports. |
 | Database | PostgreSQL 18 | Strong constraints (partial unique, generated columns, check), `numeric`, `xmin` concurrency, free |
 | API docs | Microsoft.AspNetCore.OpenApi + Swagger UI | Built in for .NET 10 |

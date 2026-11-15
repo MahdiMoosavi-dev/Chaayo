@@ -91,3 +91,10 @@ Short architecture decision records. Status: **Proposed** until you approve the 
 **Decision:** recipe lines store the parent item, pinned to the recipe by a composite FK.
 **Why:** it lets a database check constraint block self-composition, and it matches v0.1's parent → component shape.
 **Status:** Proposed
+
+<a id="adr-016"></a>
+### ADR-016 ASP.NET Core Web API with controllers
+**Decision:** the backend is an ASP.NET Core Web API (.NET 10, C#) that uses controllers (`[ApiController]`) and exposes REST + JSON, documented with OpenAPI and Swagger UI. It serves no pages: any frontend (web admin, tablet sales screen) is a separate client that calls this API.
+**Why:** this is the owner's choice. Controllers give one class per module (`ItemsController`, `ProductionsController`…), built-in model validation, ProblemDetails, and per-endpoint role policies.
+**Alternatives rejected:** Minimal APIs (less structure for about 50 endpoints); MVC or Razor Pages (would tie the UI to the server).
+**Status:** **Accepted** (owner, 2026-11-15)

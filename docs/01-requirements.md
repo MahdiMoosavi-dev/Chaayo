@@ -1,5 +1,7 @@
 # 1. Requirements
 
+> Persian version: [01-requirements.fa.md](01-requirements.fa.md)
+
 ## 1. Vision
 
 Chaayo tells a cafeteria, at any moment:

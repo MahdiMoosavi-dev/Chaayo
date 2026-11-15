@@ -5,7 +5,9 @@
 | **Status** | Draft for review. No implementation starts until this is approved. |
 | **Date** | 2026-11-15 |
 | **Supersedes** | Extends [cafeteria_inventory_system_design.docx](../cafeteria_inventory_system_design.docx) (v0.1) |
-| **Stack** | ASP.NET Core (.NET 10, C#) · EF Core · PostgreSQL |
+| **Stack** | ASP.NET Core Web API with controllers (.NET 10, C#) · EF Core · PostgreSQL. See [ADR-016](09-decisions.md#adr-016). |
+
+**Client proposal (phases, timeline, cost):** [Chaayo-Proposal.pdf](Chaayo-Proposal.pdf)
 
 ## How to review (about 45 minutes)
 
@@ -13,7 +15,7 @@ Read in this order. Each document stands alone, and the diagrams render directly
 
 | # | Document | What it answers | Review focus |
 |---|---|---|---|
-| 1 | [Requirements](01-requirements.md) | What the system must do, in clear terms | Does it match how the cafeteria really works? |
+| 1 | [Requirements](01-requirements.md) · [فارسی](01-requirements.fa.md) | What the system must do, in clear terms | Does it match how the cafeteria really works? |
 | 2 | [Data model](03-data-model.md) | **The data structure**: tables, columns, constraints, ERD | The most important review. Fixing it later is expensive. |
 | 3 | [Domain model](04-domain-model.md) | Business objects, rules, lifecycles | Are the rules right? |
 | 4 | [Business processes](05-business-processes.md) | Step-by-step flows, costing and pricing with worked examples | Walk the cake example and check the numbers. |
