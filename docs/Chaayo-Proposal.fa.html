@@ -165,6 +165,34 @@ details p{padding-bottom:14px;color:var(--muted)}
 .checks input:checked+span{color:var(--muted);text-decoration:line-through}
 .done-note{font-size:14px;color:var(--turq);font-weight:600}
 
+/* plans */
+.toggle{display:inline-flex;align-self:flex-start;border:1px solid var(--gold);border-radius:999px;padding:3px;gap:2px;background:var(--card)}
+.toggle button{font:inherit;font-size:14px;border:0;background:transparent;color:var(--muted);padding:2px 16px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.toggle button[aria-pressed="true"]{background:var(--lapis);color:var(--card)}
+.toggle button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.save{font-size:12px;color:var(--turq);font-weight:600;margin-inline-start:4px}
+.toggle button[aria-pressed="true"] .save{color:var(--card)}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;position:relative;transition:transform .25s,border-color .25s}
+.plan:hover{transform:translateY(-4px);border-color:var(--gold)}
+.plan.best{border:2px solid var(--gold);background:var(--tint)}
+.plan .badge{position:absolute;top:-12px;inset-inline-end:16px;background:var(--gold);color:var(--card);font-size:12.5px;font-weight:600;padding:0 12px;border-radius:999px;line-height:24px}
+.plan h3{color:var(--lapis);font-size:22px}
+.plan .for{font-size:14px;color:var(--muted)}
+.price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;border-block:1px solid var(--line);padding-block:8px}
+.price b{font-family:var(--display);font-size:30px;line-height:1.4;font-variant-numeric:tabular-nums}
+.price span{font-size:13.5px;color:var(--muted)}
+.plan ul{margin:0;padding-inline-start:1.2em;display:flex;flex-direction:column;gap:4px;font-size:14.5px;line-height:1.8}
+.plan li::marker{color:var(--gold)}
+.plan li.no{color:var(--muted);list-style:none;margin-inline-start:-1.2em;padding-inline-start:1.2em;text-decoration:line-through;text-decoration-color:var(--line)}
+.extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.extra{border:1px dashed var(--gold);border-radius:6px;padding:10px 14px;font-size:14.5px;line-height:1.8}
+.extra b{display:block;color:var(--lapis)}
+@media (max-width:760px){.plans{grid-template-columns:1fr}}
+@media print{.toggle{display:none}.plan,.extra{break-inside:avoid}
+  .plans{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px;break-inside:avoid;padding-top:12px}
+  .plan{padding:16px 12px 12px}.plan h3{font-size:19px}.plan ul{font-size:12.5px;line-height:1.7}.price b{font-size:22px}.price span{font-size:12px}.plan.best{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
 .pdfs{display:flex;flex-wrap:wrap;gap:12px}
 .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1px solid var(--gold);border-radius:4px;padding:6px 18px;color:var(--ink);background:var(--card);font-weight:600;font-size:15px;transition:background .2s,transform .2s}
 .btn:hover{background:var(--tint);transform:translateY(-2px)}
@@ -227,14 +255,14 @@ footer .wrap{padding-block:22px;font-size:13.5px;color:var(--muted);display:flex
 </header>
 
 <nav class="nav" aria-label="بخش‌ها"><div class="wrap" id="nav">
-  <a href="#summary">خلاصه</a><a href="#problem">مسئله</a><a href="#how">ساختار</a><a href="#assistant">دستیار هوشمند</a><a href="#phases">فازها</a><a href="#roadmap">نقشهٔ راه</a><a href="#cost">تیم و هزینه</a><a href="#tech">فناوری</a><a href="#risks">ریسک‌ها</a><a href="#faq">پرسش‌ها</a><a href="#next">گام بعد</a>
+  <a href="#summary">خلاصه</a><a href="#problem">مسئله</a><a href="#how">ساختار</a><a href="#assistant">دستیار هوشمند</a><a href="#phases">فازها</a><a href="#roadmap">نقشهٔ راه</a><a href="#cost">تیم و هزینه</a><a href="#plans">پلن‌ها</a><a href="#tech">فناوری</a><a href="#risks">ریسک‌ها</a><a href="#faq">پرسش‌ها</a><a href="#next">گام بعد</a>
 </div></nav>
 
 <main class="wrap">
 
 <section id="summary">
   <div class="sec-head"><i class="star"></i><h2>خلاصه</h2></div>
-  <p class="lede">پیشنهاد ما ساخت چایو در <b>سه فاز و حدود ۹ ماه</b> با هزینهٔ <b>حدود ۳٫۹۷ میلیارد تومان</b> است (با ۱۰٪ ذخیرهٔ احتیاطی: ۴٫۳۶ میلیارد). در پایان هر فاز یک نسخهٔ کامل و قابل استفاده تحویل می‌گیرید؛ پس می‌توانید بعد از هر فاز توقف کنید و آنچه ساخته شده برایتان می‌ماند.</p>
+  <p class="lede">پیشنهاد ما ساخت چایو در <b>سه فاز و حدود ۹ ماه</b> با هزینهٔ <b>حدود ۳٫۹۷ میلیارد تومان</b> است (با ۱۰٪ ذخیرهٔ احتیاطی: ۴٫۳۶ میلیارد). در پایان هر فاز یک نسخهٔ کامل و قابل استفاده تحویل می‌گیرید؛ پس می‌توانید بعد از هر فاز توقف کنید و آنچه ساخته شده برایتان می‌ماند. بعد از راه‌اندازی، چایو را می‌توان در سه پلن ماهانه به کافه‌های دیگر فروخت: پایه ۷۹۰ هزار، حرفه‌ای ۱٫۶۹ میلیون و هوشمند ۳٫۴۹ میلیون تومان (<a href="#plans">پلن‌های اشتراک</a>).</p>
   <div class="tbl reveal"><table>
     <thead><tr><th>فاز</th><th>چه چیزی تحویل می‌گیرید</th><th class="n">مدت</th><th class="n">هزینه (میلیون تومان)</th></tr></thead>
     <tbody>
@@ -408,6 +436,79 @@ footer .wrap{padding-block:22px;font-size:13.5px;color:var(--muted);display:flex
   <p class="muted">قیمت‌ها ۳۰ روز اعتبار دارند. به‌دلیل تورم، فازهایی که دیرتر شروع می‌شوند با نرخ همان ماه دوباره قیمت‌گذاری می‌شوند.</p>
 </section>
 
+<section id="plans">
+  <div class="sec-head"><i class="star"></i><h2>پلن‌های اشتراک</h2></div>
+  <p>بعد از ساخت، چایو را می‌توان به کافه‌های دیگر به‌صورت اشتراک ماهانه فروخت. قیمت‌ها با نرم‌افزارهای کافهٔ بازار ایران (آبان ۱۴۰۵) سنجیده شده‌اند: بیشتر کافه‌های کوچک ماهانه ۵۰۰ هزار تا ۱٫۷ میلیون تومان می‌پردازند و پلن‌های کامل به ۵ تا ۶ میلیون می‌رسند. هیچ‌کدام از رقبا دستیار هوشمند ندارند.</p>
+  <div class="toggle" role="group" aria-label="دورهٔ پرداخت">
+    <button type="button" id="billMonthly" aria-pressed="true">ماهانه</button>
+    <button type="button" id="billYearly" aria-pressed="false">سالانه <span class="save">۲۰٪ تخفیف</span></button>
+  </div>
+  <div class="plans">
+    <article class="plan reveal">
+      <h3>پایه</h3>
+      <p class="for">کافهٔ کوچک، یک صندوق</p>
+      <div class="price"><b data-m="۷۹۰ هزار" data-y="۷٫۵۸ میلیون">۷۹۰ هزار</b><span data-m="تومان در ماه" data-y="تومان در سال">تومان در ماه</span></div>
+      <ul>
+        <li>۲ کاربر</li>
+        <li>کالا، دستور تهیه، انبار، خرید، فروش، ضایعات</li>
+        <li>تولید و کسر خودکار مواد</li>
+        <li>گزارش‌های پایه</li>
+        <li>پشتیبانی با تیکت</li>
+        <li class="no">دستیار هوشمند</li>
+      </ul>
+    </article>
+    <article class="plan best reveal">
+      <span class="badge">پیشنهاد اصلی</span>
+      <h3>حرفه‌ای</h3>
+      <p class="for">کافهٔ فعال با چند کارمند</p>
+      <div class="price"><b data-m="۱٫۶۹ میلیون" data-y="۱۶٫۲ میلیون">۱٫۶۹ میلیون</b><span data-m="تومان در ماه" data-y="تومان در سال">تومان در ماه</span></div>
+      <ul>
+        <li>۶ کاربر</li>
+        <li>همهٔ امکانات پلن پایه</li>
+        <li>گزارش کامل: سود و زیان، ضایعات، ارزش انبار</li>
+        <li>قیمت پیشنهادی و هشدار افت سود</li>
+        <li>انبارگردانی، صفحهٔ فروش تبلت، خروجی <span class="en">Excel</span></li>
+        <li>پیام خلاصهٔ روزانه برای مالک</li>
+        <li><b>دستیار هوشمند: ۳۰۰ فرمان در ماه</b></li>
+        <li>پشتیبانی با تیکت و تلفن</li>
+      </ul>
+    </article>
+    <article class="plan reveal">
+      <h3>هوشمند</h3>
+      <p class="for">کافهٔ پرفروش با شیرینی‌پزی</p>
+      <div class="price"><b data-m="۳٫۴۹ میلیون" data-y="۳۳٫۵ میلیون">۳٫۴۹ میلیون</b><span data-m="تومان در ماه" data-y="تومان در سال">تومان در ماه</span></div>
+      <ul>
+        <li>کاربر نامحدود</li>
+        <li>همهٔ امکانات پلن حرفه‌ای</li>
+        <li><b>دستیار هوشمند: ۳٬۰۰۰ فرمان در ماه</b></li>
+        <li>برنامه‌ریزی تولید، فهرست خرید، مهندسی منو</li>
+        <li>تاریخ انقضا، چند محل نگهداری، پیش‌بینی فروش*</li>
+        <li>پشتیبانی اولویت‌دار</li>
+      </ul>
+    </article>
+  </div>
+  <p class="muted">* این امکانات در فاز ۳ ساخته می‌شوند. تا آن زمان پلن هوشمند بدون آن‌ها فروخته می‌شود.</p>
+  <div class="extras">
+    <div class="extra"><b>۱۴ روز آزمایش رایگان</b>پلن حرفه‌ای، بدون نیاز به کارت بانکی</div>
+    <div class="extra"><b>راه‌اندازی: ۲٫۵ میلیون تومان (یک‌بار)</b>ورود موجودی اولیه و دستورهای تهیه، به‌علاوهٔ یک جلسه آموزش (اختیاری)</div>
+    <div class="extra"><b>فرمان اضافهٔ دستیار</b>بستهٔ ۵۰۰ فرمانی: ۱۹۰ هزار تومان</div>
+  </div>
+  <h3>مقایسه با رقبا</h3>
+  <div class="tbl reveal"><table>
+    <thead><tr><th>نرم‌افزار</th><th class="n">قیمت ماهانه (تومان)</th><th>ملاحظه</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://www.biameno.ir/">بیامنو</a></td><td class="n">۴۱۸ هزار / ۷۵۶ هزار / ۵٫۵۹ میلیون</td><td>انبار هوشمند فقط در پلن گران</td></tr>
+      <tr><td><a href="https://chashni.net/">چاشنی</a></td><td class="n">۵۰۰ هزار تا ۴٫۵ میلیون</td><td>پلن رایگان هم دارد</td></tr>
+      <tr><td><a href="https://abriron.com/">ابرآیرون</a></td><td class="n">۵۵۰ هزار / ۸۵۰ هزار / ۱٫۲۵ میلیون</td><td>حسابداری و انبار؛ ۲۰٪ تخفیف سالانه</td></tr>
+      <tr><td><a href="https://dropapp.dev/site/price-table">دراپ</a></td><td class="n">۸۵۰ هزار / ۱٫۶۵ میلیون</td><td>به‌علاوهٔ هزینهٔ اولیه</td></tr>
+      <tr><td><a href="https://www.parmisit.com/products/acconting-software/small-bussiness-solution/restaurant/">پارمیس</a></td><td class="n">۸۰۴ هزار تا ۶٫۳۵ میلیون</td><td>به‌علاوهٔ هزینهٔ اولیه</td></tr>
+      <tr><td><a href="https://hesabesh.com/">حسابش</a></td><td class="n">۱٫۸ میلیون</td><td>پلن پایه</td></tr>
+    </tbody>
+  </table></div>
+  <p>پلن پایه هم‌ردهٔ ابرآیرون و دراپ است ولی انبار مبتنی بر دستور تهیه دارد؛ بیامنو همین را فقط در پلن ۵٫۶ میلیونی می‌دهد. پلن حرفه‌ای هم‌قیمت دراپ <span class="en">Delux</span> است و دستیار <span class="en">AI</span> و قیمت‌گذاری هوشمند را اضافه می‌کند. پلن هوشمند حدود ۴۰٪ ارزان‌تر از پلن‌های کامل بیامنو و پارمیس است. قیمت رقبا از صفحهٔ فروش خودشان است و ممکن است چند ماه قدیمی باشد.</p>
+  <p class="gate"><b>مدل <span class="en">AI</span> در اشتراک‌ها:</b> فرمان‌های روزمره با <span class="en">Claude Haiku 5.5</span> اجرا می‌شوند (حدود ۰٫۰۰۲ دلار برای هر فرمان؛ ۳٬۰۰۰ فرمان حدود ۶ دلار در ماه). فقط پرسش‌های تحلیلی مثل «چرا سود کم شد؟» به مدل قوی‌تر می‌روند و سهمیهٔ جدا دارند. اگر همه‌چیز با <span class="en">Claude Opus 5.5</span> اجرا شود، فرمان‌های پلن هوشمند حدود ۱۲۰ دلار در ماه هزینه دارد که از قیمت خود پلن بیشتر است.</p>
+</section>
+
 <section id="tech">
   <div class="sec-head"><i class="star"></i><h2>فناوری و کیفیت</h2></div>
   <p>چایو با فناوری‌های رایج و دارای پشتیبانی بلندمدت ساخته می‌شود؛ هر تیم توانمندی می‌تواند آن را نگهداری کند.</p>
@@ -456,6 +557,8 @@ footer .wrap{padding-block:22px;font-size:13.5px;color:var(--muted);display:flex
   <details><summary>چرا دستیار در فاز ۲ است، نه فاز ۱؟</summary><p>دستیار روی همان <span class="en">API</span> و قواعد فاز ۱ کار می‌کند. اول باید آن هسته ساخته و در کافه آزموده شود تا دستیار روی پایهٔ مطمئن سوار شود.</p></details>
   <details><summary>هزینهٔ ماهانه بعد از ساخت چقدر است؟</summary><p>میزبانی سرور حدود ۳ تا ۸ میلیون تومان در ماه. از فاز ۲ به بعد هزینهٔ مدل <span class="en">AI</span> هم اضافه می‌شود: حدود ۱۵۰ تا ۲۵۰ دلار در ماه با مدل پیشنهادی، یا ۵ تا ۱۵ دلار با مدل سبک‌تر. پشتیبانی سالانه اختیاری است.</p></details>
   <details><summary>اگر بخواهیم وسط کار چیزی اضافه کنیم؟</summary><p>درخواست‌های جدید به فاز بعد می‌روند، مگر اینکه جایگزین کاری هم‌اندازه در همان فاز شوند. ذخیرهٔ احتیاطی ۱۰٪ برای همین موارد پیشنهاد شده است.</p></details>
+  <details><summary>کافه‌های دیگر هم می‌توانند از چایو استفاده کنند؟</summary><p>بله، با اشتراک ماهانه یا سالانه در سه پلن پایه، حرفه‌ای و هوشمند (بخش پلن‌های اشتراک). پلن حرفه‌ای ۱۴ روز آزمایش رایگان دارد.</p></details>
+  <details><summary>اگر فرمان‌های دستیار در یک ماه تمام شود چه؟</summary><p>بقیهٔ سامانه بدون تغییر کار می‌کند. برای ادامهٔ استفاده از دستیار می‌توانید بستهٔ ۵۰۰ فرمانی را به قیمت ۱۹۰ هزار تومان بخرید یا پلن را ارتقا دهید.</p></details>
   <details><summary>گزارش‌ها با ماه‌های شمسی کار می‌کنند؟</summary><p>بله، اگر انتخاب کنید. تقویم (شمسی یا میلادی)، روز شروع هفته و واحد پول (ریال یا تومان) از تصمیم‌های شروع کار هستند.</p></details>
 </section>
 
@@ -480,7 +583,7 @@ footer .wrap{padding-block:22px;font-size:13.5px;color:var(--muted);display:flex
 </main>
 
 <footer><div class="wrap">
-  <span>منابع: گزارش حقوق برنامه‌نویسان ایران‌تلنت (۱۴۰۵) · برآورد هزینهٔ نرم‌افزار سفارشی آرکوتک (۱۴۰۵) · نرخ‌های رسمی <span class="en">Anthropic API</span> (نوامبر ۲۰۲۶) · طراحی سامانهٔ چایو نسخهٔ <span class="en">0.2</span></span>
+  <span>منابع: گزارش حقوق برنامه‌نویسان ایران‌تلنت (۱۴۰۵) · برآورد هزینهٔ نرم‌افزار سفارشی آرکوتک (۱۴۰۵) · صفحه‌های قیمت بیامنو، چاشنی، ابرآیرون، دراپ، پارمیس و حسابش (آبان ۱۴۰۵) · نرخ‌های رسمی <span class="en">Anthropic API</span> (نوامبر ۲۰۲۶) · طراحی سامانهٔ چایو نسخهٔ <span class="en">0.2</span></span>
   <span>چایو · ۲۴ آبان ۱۴۰۵</span>
 </div></footer>
 </div>
@@ -514,6 +617,14 @@ footer .wrap{padding-block:22px;font-size:13.5px;color:var(--muted);display:flex
       requestAnimationFrame(step);
     });
   }
+
+  // monthly / yearly toggle for plan prices
+  var bm=document.getElementById('billMonthly'),by=document.getElementById('billYearly');
+  function bill(yearly){
+    bm.setAttribute('aria-pressed',String(!yearly));by.setAttribute('aria-pressed',String(yearly));
+    document.querySelectorAll('.price [data-m]').forEach(function(el){el.textContent=el.getAttribute(yearly?'data-y':'data-m');});
+  }
+  bm.addEventListener('click',function(){bill(false);});by.addEventListener('click',function(){bill(true);});
 
   // decisions checklist, remembered on this device only
   var boxes=[].slice.call(document.querySelectorAll('#checks input')),note=document.getElementById('doneNote'),KEY='chaayo-proposal-checks';

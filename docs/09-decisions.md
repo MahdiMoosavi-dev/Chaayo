@@ -98,3 +98,15 @@ Short architecture decision records. Status: **Proposed** until you approve the 
 **Why:** this is the owner's choice. Controllers give one class per module (`ItemsController`, `ProductionsController`…), built-in model validation, ProblemDetails, and per-endpoint role policies.
 **Alternatives rejected:** Minimal APIs (less structure for about 50 endpoints); MVC or Razor Pages (would tie the UI to the server).
 **Status:** **Accepted** (owner, 2026-11-15)
+
+<a id="adr-017"></a>
+### ADR-017 Subscription plans and a cheap default AI model
+**Decision:** Chaayo is also sold to other cafés as a subscription, in three plans:
+- Basic: 790,000 Toman a month, 2 users, no assistant.
+- Pro: 1.69 million Toman a month, 6 users, 300 assistant commands.
+- Smart: 3.49 million Toman a month, unlimited users, 3,000 assistant commands.
+
+A yearly subscription is 20% off. Pro has a 14-day free trial. Optional setup costs 2.5 million Toman once. Extra assistant commands cost 190,000 Toman per 500. Routine assistant commands run on Claude Haiku 5.5. Analysis questions go to a stronger model, with their own quota.
+**Why:** the prices sit against Iranian café software checked in November 2026: Biameno, Chashni, Abriron, Drop, Parmis and Hesabesh, which charge 0.4–6.4 million Toman a month. None of them has an AI assistant. On Claude Opus 5.5 alone, a Smart plan's 3,000 commands would cost about $120 a month, more than the plan's price. On Haiku 5.5 they cost about $6.
+**Consequences:** the system needs per-café usage metering (assistant commands, users) and a model router in the AI adapter. Multi-tenant hosting (one deployment, many cafés) must be decided before selling subscriptions; the v0.2 design assumes one café per deployment.
+**Status:** **Accepted** (owner, 2026-11-15)
