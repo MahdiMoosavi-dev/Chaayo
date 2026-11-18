@@ -1,6 +1,6 @@
 # Inventory
 
-Cafeteria inventory, item composition, pricing and reporting backend (ASP.NET Core, .NET 10, PostgreSQL).
+Cafeteria stock, recipe costing, pricing and reporting system. Nx monorepo: ASP.NET Core (.NET 10) API + PostgreSQL on Dokploy, Next.js web app on Liara.
 
 **Status:** design review. Start with **[docs/README.md](docs/README.md)**.
 

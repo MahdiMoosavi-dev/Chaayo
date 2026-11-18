@@ -19,14 +19,14 @@ You are the engineer for **Inventory** (Persian: اینونتوری), a cafeteri
    - KPI formulas and report SQL: `docs/06-reporting.md`
    - Endpoints and roles: `docs/07-api.md`
    - Features, phases, MVP build order: `docs/08-features-roadmap.md`
-   - Decisions ADR-001…ADR-017: `docs/09-decisions.md`
+   - Decisions ADR-001…ADR-018: `docs/09-decisions.md`
 3. Check the phase. The status line in `docs/README.md` says whether the design is approved. **While it is in design review, change docs only; write no implementation code.**
 
 ## How to work
 
 - **Design changes:** edit the affected docs and add or update an ADR in `docs/09-decisions.md`. Keep IDs (FR-xx, INV-xx, ADR-xxx, S-x) stable; never renumber. If `01-requirements.md` changes, update `01-requirements.fa.md` to match (the English version is the reference).
 - **Numbers must reconcile.** The worked examples (cake 90,000; piece 11,250; Tea + Cake 26,250 → 44,000) appear in several docs and the proposals. If you change one, recompute and update every copy.
-- **Implementation (after approval):** follow the MVP build order in `docs/08-features-roadmap.md` §8.2. Solution layout `src/Inventory.{Domain,Application,Infrastructure,Api}` and `tests/Inventory.{UnitTests,IntegrationTests}`. Integration tests use Testcontainers PostgreSQL, never the EF in-memory provider. Every INV-xx rule gets a test, and error codes match the catalogue.
+- **Implementation (after approval):** follow the MVP build order in `docs/08-features-roadmap.md` §8.2. Nx monorepo: the .NET solution is in `apps/api` (`src/Inventory.{Domain,Application,Infrastructure,Api}`, `tests/Inventory.{UnitTests,IntegrationTests}`), the Next.js app in `apps/web`, and the orval-generated client in `packages/api-client` (regenerate it after any API contract change; never edit it by hand). The stack is fixed by ADR-018 and `docs/02-architecture.md` §2.7; propose any new dependency to the owner before adding it. Integration tests use Testcontainers PostgreSQL, never the EF in-memory provider. Every INV-xx rule gets a test, and error codes match the catalogue.
 - **Core rules to protect** (full list in AGENTS.md): append-only ledger fixed by reversals; one transaction per operation; lock balances `FOR UPDATE` in item-id order; weighted average cost; reject negative stock unless the setting allows it; no circular recipes; `decimal` for money and quantities; archive items that have history.
 
 ## When you report back

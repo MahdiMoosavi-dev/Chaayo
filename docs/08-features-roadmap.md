@@ -45,11 +45,11 @@ flowchart LR
 
 | Step | Deliverable | Done when |
 |---|---|---|
-| 1 | **Data structure**: domain entities, EF configurations, the initial migration with all constraints and seed units | Migration applies to PostgreSQL. Constraint tests pass: self-reference, positive quantity, one active recipe, MTO ⇒ composite. |
+| 1 | **Nx workspace + data structure**: `apps/api` solution in the Nx monorepo, domain entities, EF configurations, the initial migration with all constraints and seed units | Migration applies to PostgreSQL. Constraint tests pass: self-reference, positive quantity, one active recipe, MTO ⇒ composite. |
 | 2 | Catalog + recipes (cycle check, versions, where-used, tree) | Unit + integration tests for INV-01 to INV-12 |
 | 3 | Stock posting core (WAC, locking, ledger, balances) + purchases + adjustments | Concurrency test: 2 parallel issues of the last unit → exactly 1 succeeds |
 | 4 | Production (+ preview, capacity) | Scenarios S-1, S-2 |
 | 5 | Sales (+ made-to-order expansion), waste, stock count, reversal and correct | Scenarios S-3, S-4; reversal tests |
 | 6 | Pricing: cost roll-up, suggested price, margin guard | Cake and Tea + Cake worked examples reproduce exactly |
 | 7 | Reports + dashboard endpoints | P&L numbers match hand-calculated fixtures |
-| 8 | Auth, roles, settings, Swagger, Docker Compose | Each endpoint's role policy is tested |
+| 8 | Auth, roles, settings, Swagger; Next.js web app shell (login, RTL, PWA); deploy pipeline (Dokploy for the API, Liara for the web) | Each endpoint's role policy is tested; a push to `main` deploys only the changed app |

@@ -5,7 +5,7 @@
 | **Status** | Draft for review. No implementation starts until this is approved. |
 | **Date** | 2026-11-15 |
 | **Supersedes** | Extends [cafeteria_inventory_system_design.docx](../cafeteria_inventory_system_design.docx) (v0.1) |
-| **Stack** | ASP.NET Core Web API with controllers (.NET 10, C#) · EF Core · PostgreSQL. See [ADR-016](09-decisions.md#adr-016). |
+| **Stack** | Nx monorepo · ASP.NET Core Web API with controllers (.NET 10, C#) · EF Core · PostgreSQL · Next.js web app (PWA). Hosting: Dokploy (API, database) and Liara (web). See [ADR-016](09-decisions.md#adr-016) and [ADR-018](09-decisions.md#adr-018). |
 
 **Client proposal (phases, timeline, cost):** [Inventory-Proposal.pdf](Inventory-Proposal.pdf) (English) · [Inventory-Proposal.fa.pdf](Inventory-Proposal.fa.pdf) (فارسی) · [Inventory-Proposal.fa.html](Inventory-Proposal.fa.html) (Persian web page with effects; download and open in a browser)
 
@@ -38,7 +38,7 @@ These are the choices I made where your answer could change the design. Each lin
 | Q-5 | How are past mistakes fixed? | You never edit or delete history. A **reversal** cancels the operation and you re-enter it. See [ADR-004](09-decisions.md#adr-004). | ☐ |
 | Q-6 | Calendar for monthly and weekly reports? | Configurable time zone and week start. **Jalali months?** See [Reporting §6.5](06-reporting.md#65-periods-time-zone-and-calendar). | ☐ needs your answer |
 | Q-7 | Currency? | One currency, set in settings (for example IRR or Toman). | ☐ needs your answer |
-| Q-8 | Frontend? | Out of scope for this design. Choose between React and Blazor before the UI phase. | ☐ later |
+| Q-8 | Frontend? | **Decided:** Next.js in an Nx monorepo, hosted on Liara; the sales screen is the same app as a PWA. See [ADR-018](09-decisions.md#adr-018) and [Architecture §2.7](02-architecture.md#27-technology-choices). | ☑ decided |
 | Q-9 | MVP scope | The features marked **MVP** in [Features and roadmap](08-features-roadmap.md). | ☐ |
 
 ## What changed from v0.1
