@@ -99,7 +99,7 @@ Idempotency-Key: 0193a1f2-7c4e-7b1a-9f0e-2d1c3b4a5e6f
 Content-Type: application/problem+json
 
 {
-  "type": "https://chaayo/errors/stock.insufficient",
+  "type": "https://inventory/errors/stock.insufficient",
   "title": "Not enough stock",
   "status": 422,
   "code": "stock.insufficient",

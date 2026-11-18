@@ -1,4 +1,4 @@
-# AGENTS.md — Chaayo (Cafeteria Inventory & Item Composition System)
+# AGENTS.md — Inventory (Cafeteria Stock, Recipes & Pricing System)
 
 Instructions for AI coding agents (Claude Code, Codex, Copilot, Cursor, …) working in this repo.
 
@@ -29,11 +29,11 @@ The original v0.1 design is [cafeteria_inventory_system_design.docx](cafeteria_i
 ## Solution layout
 
 ```
-src/Chaayo.Domain          entities, invariants, domain services (no EF, no ASP.NET)
-src/Chaayo.Application     use cases per module
-src/Chaayo.Infrastructure  EF Core, configurations, migrations, report SQL, jobs
-src/Chaayo.Api             controllers, DTOs, auth, OpenAPI
-tests/Chaayo.UnitTests, tests/Chaayo.IntegrationTests
+src/Inventory.Domain          entities, invariants, domain services (no EF, no ASP.NET)
+src/Inventory.Application     use cases per module
+src/Inventory.Infrastructure  EF Core, configurations, migrations, report SQL, jobs
+src/Inventory.Api             controllers, DTOs, auth, OpenAPI
+tests/Inventory.UnitTests, tests/Inventory.IntegrationTests
 ```
 
 Dependencies: Api → Application → Domain; Infrastructure → Application/Domain. Thin controllers.
@@ -43,8 +43,8 @@ Dependencies: Api → Application → Domain; Infrastructure → Application/Dom
 ```bash
 dotnet build
 dotnet test
-dotnet run --project src/Chaayo.Api
-dotnet ef migrations add <Name> --project src/Chaayo.Infrastructure --startup-project src/Chaayo.Api
+dotnet run --project src/Inventory.Api
+dotnet ef migrations add <Name> --project src/Inventory.Infrastructure --startup-project src/Inventory.Api
 ```
 
 ## Non-negotiable rules (details in the docs)

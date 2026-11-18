@@ -13,15 +13,15 @@ flowchart LR
     owner(["Owner"])
     sup(["Supervisor"])
     staff(["Staff / Cashier"])
-    chaayo["Chaayo<br/>Inventory, pricing and reporting"]
+    inventory["Inventory<br/>Stock, pricing and reporting"]
     msg["Messaging (later)<br/>Telegram / email daily summary"]
     excel["Excel / CSV (later)<br/>exports"]
 
-    owner -- "prices, settings, reports" --> chaayo
-    sup -- "items, recipes, purchases, production, counts" --> chaayo
-    staff -- "sales, waste" --> chaayo
-    chaayo -. "daily summary, low-stock alerts" .-> msg
-    chaayo -. "report files" .-> excel
+    owner -- "prices, settings, reports" --> inventory
+    sup -- "items, recipes, purchases, production, counts" --> inventory
+    staff -- "sales, waste" --> inventory
+    inventory -. "daily summary, low-stock alerts" .-> msg
+    inventory -. "report files" .-> excel
 ```
 
 ## 2.3 Containers
@@ -34,7 +34,7 @@ flowchart TB
     end
 
     subgraph server ["Server (Docker)"]
-        api["Chaayo.Api<br/>ASP.NET Core Web API, .NET 10<br/>REST + OpenAPI"]
+        api["Inventory.Api<br/>ASP.NET Core Web API, .NET 10<br/>REST + OpenAPI"]
         worker["Background jobs<br/>(hosted service in the same process)<br/>alerts, balance check, summaries"]
     end
 
@@ -81,10 +81,10 @@ Rules: no cycles between modules. Reporting only reads. **Inventory owns every w
 
 ```mermaid
 flowchart TB
-    Api["Chaayo.Api<br/>controllers, DTOs, auth, OpenAPI, error mapping"]
-    App["Chaayo.Application<br/>use cases: ItemService, RecipeService, ProductionService,<br/>SalesService, PurchaseService, ReportQueries"]
-    Dom["Chaayo.Domain<br/>entities, invariants, domain services<br/>no EF, no ASP.NET"]
-    Inf["Chaayo.Infrastructure<br/>EF Core DbContext, configurations, migrations,<br/>repositories, report SQL, background jobs"]
+    Api["Inventory.Api<br/>controllers, DTOs, auth, OpenAPI, error mapping"]
+    App["Inventory.Application<br/>use cases: ItemService, RecipeService, ProductionService,<br/>SalesService, PurchaseService, ReportQueries"]
+    Dom["Inventory.Domain<br/>entities, invariants, domain services<br/>no EF, no ASP.NET"]
+    Inf["Inventory.Infrastructure<br/>EF Core DbContext, configurations, migrations,<br/>repositories, report SQL, background jobs"]
 
     Api --> App
     App --> Dom
@@ -94,15 +94,15 @@ flowchart TB
 ```
 
 ```
-Chaayo.sln
+Inventory.sln
 src/
-  Chaayo.Domain/          Catalog/ Recipes/ Inventory/ Purchasing/ Pricing/ Common/
-  Chaayo.Application/     <Module>/ (commands, queries, services, interfaces)
-  Chaayo.Infrastructure/  Persistence/ (DbContext, Configurations/, Migrations/), Reporting/, Jobs/
-  Chaayo.Api/             Controllers/, Contracts/ (request and response DTOs), Program.cs
+  Inventory.Domain/          Catalog/ Recipes/ Inventory/ Purchasing/ Pricing/ Common/
+  Inventory.Application/     <Module>/ (commands, queries, services, interfaces)
+  Inventory.Infrastructure/  Persistence/ (DbContext, Configurations/, Migrations/), Reporting/, Jobs/
+  Inventory.Api/             Controllers/, Contracts/ (request and response DTOs), Program.cs
 tests/
-  Chaayo.UnitTests/         domain rules, costing, pricing, cycle check
-  Chaayo.IntegrationTests/  real PostgreSQL (Testcontainers): transactions, constraints, concurrency
+  Inventory.UnitTests/         domain rules, costing, pricing, cycle check
+  Inventory.IntegrationTests/  real PostgreSQL (Testcontainers): transactions, constraints, concurrency
 ```
 
 ## 2.6 Life of a write request
@@ -161,7 +161,7 @@ sequenceDiagram
 
 ```mermaid
 flowchart LR
-    dev["Developer machine<br/>docker compose up"] --> img["Container image<br/>chaayo-api"]
+    dev["Developer machine<br/>docker compose up"] --> img["Container image<br/>inventory-api"]
     img --> host["Server or VPS<br/>Docker"]
     host --> pg[("PostgreSQL volume")]
     host --> bk[("Backup folder or object storage")]

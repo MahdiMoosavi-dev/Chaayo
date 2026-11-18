@@ -1,4 +1,4 @@
-# Chaayo
+# Inventory
 
 Cafeteria inventory, item composition, pricing and reporting backend (ASP.NET Core, .NET 10, PostgreSQL).
 
@@ -6,3 +6,4 @@ Cafeteria inventory, item composition, pricing and reporting backend (ASP.NET Co
 
 - Original design (v0.1): [cafeteria_inventory_system_design.docx](cafeteria_inventory_system_design.docx)
 - Agent and contributor guide: [AGENTS.md](AGENTS.md)
+- Claude Code subagent for this repo: [.claude/agents/inventory-engineer.md](.claude/agents/inventory-engineer.md)

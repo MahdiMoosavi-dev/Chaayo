@@ -101,7 +101,7 @@ Short architecture decision records. Status: **Proposed** until you approve the 
 
 <a id="adr-017"></a>
 ### ADR-017 Subscription plans and a cheap default AI model
-**Decision:** Chaayo is also sold to other cafés as a subscription, in three plans:
+**Decision:** Inventory is also sold to other cafés as a subscription, in three plans:
 - Basic: 790,000 Toman a month, 2 users, no assistant.
 - Pro: 1.69 million Toman a month, 6 users, 300 assistant commands.
 - Smart: 3.49 million Toman a month, unlimited users, 3,000 assistant commands.

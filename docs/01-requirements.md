@@ -4,7 +4,7 @@
 
 ## 1. Vision
 
-Chaayo tells a cafeteria, at any moment:
+Inventory tells a cafeteria, at any moment:
 
 - **what it has in storage**, and what that stock is worth;
 - **what each product really costs to make**, down to the last gram of sugar;
